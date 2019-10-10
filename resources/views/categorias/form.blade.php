@@ -19,10 +19,12 @@
 					@endif
 					<!-- Formulario --->
 					@if(isset($category))
-					<form action="{{ route('categoria.update', $category->id) }}" method="POST">
+					{!! Form::model($category, ['route' => ['categoria.update', $category->id]]) !!}
+					<!--<form action="{{ route('categoria.update', $category->id) }}" method="POST">-->
 						<input type="hidden" name="_method" value="PATCH">
 					@else
-					<form action="{{ route('categoria.store') }}" method="POST">
+					<!--<form action="{{ route('categoria.store') }}" method="POST">-->
+					{!! Form::open(['route' => 'categoria.store']) !!}
 					@endif
 						@csrf
 						<div class="form-group row">	
@@ -34,7 +36,13 @@
 									   value="{{ $category->name ?? '' }}{{ old('name') }}" 
 									   class="form-control"
 									   required>
+								
+								{!! Form::text('name', null, ['class'=>"form-control", 'id'=>'name']); !!}
+
 							</div>
+
+
+
 						</div>	
 
 						<div class="form-group row">	
@@ -79,7 +87,8 @@
                                 </button>
                             </div>
                         </div>
-					</form>
+					<!--</form>-->
+					{!! Form::close() !!}
 					<!-- Fin Formulario -->
         		
             	</div>
