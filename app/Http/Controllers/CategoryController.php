@@ -14,7 +14,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+
+        return view('categorias.index', compact('categories'));
     }
 
     /**
@@ -24,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categorias.form');
     }
 
     /**
@@ -36,7 +38,10 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|max:191',
+            'description' => 'required',
+            'reference' => 'required|numeric',
+            'slug' => 'required|max:191'
         ]);
 
         Category::create($request->all());
@@ -49,8 +54,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Category $categorium)
     {
+        $category = $categorium;
         return view('categorias.show', compact('category'));
     }
 
@@ -60,8 +66,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Category $categorium)
     {
+        $category = $categorium;
         return view('categorias.form', compact('category'));
     }
 
@@ -72,12 +79,12 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Category $categorium)
     {
-        $category->fill($request->all());
-        $category->save();
+        $categorium->fill($request->all());
+        $categorium->save();
 
-        return redirect()->route('categoria.show', $category->id);
+        return redirect()->route('categoria.show', $categorium->id);
     }
 
     /**
@@ -86,9 +93,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Category $categorium)
     {
-        $category->delete();
+        $categorium->delete();
 
         return redirect()->route('categoria.index');
     }
