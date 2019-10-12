@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.template')
 
 @section('content')
 
-<div class="row">
+<div class="row w-100">
 	<div class="col-10 offset-1">
 		<table class="table">
 			<thead class="thead-dark">

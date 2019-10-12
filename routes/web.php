@@ -15,7 +15,10 @@
     return view('welcome');
 });*/
 
-Route::get('/', 'CategoryController@index');
+//Route::get('/', 'CategoryController@index');
+Route::get('/', function(){
+	return view('ecommerce_home');
+});
 
 Auth::routes();
 

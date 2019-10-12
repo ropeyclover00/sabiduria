@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.template')
 
 @section('content')
 
-<div class="row">
-	<div class="col-10 offset-1">
+<div class="row w-100">
+	<div class="col-1"></div>
+	<div class="col-10">
 		<a class="btn btn-success" href="{{ route('categoria.create') }}">Agregar nueva categoria</a>
 		<br><br>
 		<table class="table">
