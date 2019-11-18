@@ -5,18 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Category extends Model
+class Subcategory extends Model
 {
-    protected $fillable = ['name', 'description', 'slug', 'image_id'];
+	protected $fillable = ['name', 'description', 'slug', 'image_id', 'category_id'];
 
     public function files()
     {
         return $this->morphMany(File::class, 'fileable');
-    }
-
-    public function subcategories()
-    {
-    	return $this->hasMany('App\Subcategory');
     }
 
     public function products()

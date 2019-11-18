@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'rol', 'last_name', 'address', 'interior_number', 'exterior_number', 'suburb', 'between_streets', 'postal_code', 'phone', 'cellphone', 'city_id', 'state_id', 'image_id'
     ];
 
     /**
@@ -36,4 +36,54 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function state()
+    {
+        return $this->belongsTo('App\State');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->name} {$this->last_name}";
+    }
+
+    public function getStateNameAttribute()
+    {
+        return $this->state->name;
+    }
+
+    public function getCityNameAttribute()
+    {
+        return $this->state->name;
+    }
+
+    public function getNameAttribute($value)
+    {
+        return ucfirst(strtolower($value));
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
+
+    public function getLastNameAttribute($value)
+    {
+        return ucfirst(strtolower($value));
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = strtoupper($value);
+    }
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
 }
