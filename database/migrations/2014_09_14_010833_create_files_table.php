@@ -19,6 +19,8 @@ class CreateFilesTable extends Migration
             $table->string('hash');
             $table->string('mime');
             $table->string('size');
+            $table->string('disk');
+            $table->string('key');
 
             $table->integer('fileable_id')->unsigned();
             $table->string('fileable_type');

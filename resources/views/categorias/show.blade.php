@@ -1,4 +1,4 @@
-@extends('layouts.template')
+@extends('layouts.app')
 
 @section('content')
 
@@ -9,7 +9,7 @@
 				<tr>
 					<th scope="col">ID</th>
 					<th scope="col">Nombre</th>
-					<th scope="col">Referencia</th>
+					<th scope="col">Imagen</th>
 					<th scope="col">Descripción</th>
 					<th scope="col">Slug</th>
 					<th scope="col">Acciones</th>
@@ -21,8 +21,14 @@
 				<tr>
 					<th scope="row">{{$category->id}}</th>
 					<td>{{$category->name}}</td>
-					<td>{{$category->reference }}</td>
-					<td>{{$category->description }}</td>
+					<td>
+						@if($category->imgUrl)
+							<img src="{{ $category->imgUrl }}" alt="" width="75px">
+						@else
+							N/A
+						@endif
+					</td>
+					<td>{!! $category->description !!}</td>
 					<td>{{$category->slug }}</td>
 					<td>
 						<form method="POST" action="{{ route('categoria.destroy', $category->id) }}">

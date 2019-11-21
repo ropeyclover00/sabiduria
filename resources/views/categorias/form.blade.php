@@ -1,4 +1,4 @@
-@extends('layouts.template')
+@extends('layouts.app')
 
 @section('content')
 
@@ -19,12 +19,12 @@
 					@endif
 					<!-- Formulario --->
 					@if(isset($category))
-					{!! Form::model($category, ['route' => ['categoria.update', $category->id]]) !!}
+					{!! Form::model($category, ['route' => ['categoria.update', $category->id], 'files' => true]) !!}
 					<!--<form action="{{ route('categoria.update', $category->id) }}" method="POST">-->
 						<input type="hidden" name="_method" value="PATCH">
 					@else
 					<!--<form action="{{ route('categoria.store') }}" method="POST">-->
-					{!! Form::open(['route' => 'categoria.store']) !!}
+					{!! Form::open(['route' => 'categoria.store', 'files' => true]) !!}
 					@endif
 						@csrf
 						<div class="form-group row">	
@@ -36,13 +36,8 @@
 									   value="{{ $category->name ?? '' }}{{ old('name') }}" 
 									   class="form-control"
 									   required>
-								
-								{!! Form::text('name', null, ['class'=>"form-control", 'id'=>'name']); !!}
 
 							</div>
-
-
-
 						</div>	
 
 						<div class="form-group row">	
@@ -52,35 +47,17 @@
 										  name="description" 
 										  id="description" 
 										  rows="4"
-										  required>{{ $category->description ?? '' }}{{old('description')}}</textarea>
+										  >{{ $category->description ?? '' }}{{old('description')}}</textarea>
 							</div>
 						</div>	
 
-						<div class="form-group row">	
-							<label class="col-md-3 col-form-label text-md-right" for="reference">	Referencia </label>
-							<div class="col-md-8">
-								<input id="reference" 
-									   type="number" 
-									   name="reference" 
-									   value="{{ $category->reference ?? '' }}{{ old('reference') }}" 
-									   class="form-control"
-									   required>
-							</div>
-						</div>	
-
-						<div class="form-group row">	
-							<label class="col-md-3 col-form-label text-md-right" for="slug">	Slug </label>
-							<div class="col-md-8">
-								<input id="slug" 
-									   type="text" 
-									   name="slug" 
-									   value="{{ $category->slug ?? '' }}{{ old('slug') }}" 
-									   class="form-control"
-									   required>
-							</div>
-						</div>	
-
-						 <div class="form-group row mb-0">
+					
+						<div class="custom-file col-md-8 offset-3 mb-4" >
+						    <input type="file" class="custom-file-input" id="customFileLang" name="file" lang="es">
+						    <label class="custom-file-label" for="customFileLang">Elige una imagen</label>
+						</div>
+						
+						<div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     Guardar
@@ -90,10 +67,40 @@
 					<!--</form>-->
 					{!! Form::close() !!}
 					<!-- Fin Formulario -->
+
+					@if(isset($category->imgUrl))
+					<div class="row mt-5">
+						<div class="col-10 offset-1">
+							<h5>Imagen Actual:</h5>
+							<img src="{{$category->imgUrl}}" alt="" width="60%">
+						</div>
+					</div>
+					@endif
         		
             	</div>
             </div>
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('script')
+<script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
+<script>
+	$(function(){
+		$(".custom-file-input").on("change", function() {
+		  var fileName = $(this).val().split("\\").pop();
+		  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+		});
+
+		CKEDITOR.config.height = 400;
+		CKEDITOR.config.width = 'auto';
+		CKEDITOR.replace('description');
+	})
+
+	
+	
+</script>
+
 @endsection

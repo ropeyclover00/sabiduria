@@ -29,18 +29,14 @@ class Category extends Model
     	return $this->hasMany('App\Blog');
     }
 
-    public function setNameAttribute($value)
-    {
-    	$this->attributes['name'] = strtoupper($value);
-    }
-
-    public function getNameAttribute($value)
-    {
-        return ucfirst(strtolower($value));
-    }
 
     public function setSlugAttribute($value)
     {
     	$this->attributes['slug'] = Str::slug($value);
+    }
+
+    public function image()
+    {
+        return "hola";
     }
 }

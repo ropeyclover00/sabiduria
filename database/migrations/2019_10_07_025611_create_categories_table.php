@@ -18,12 +18,10 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->string("slug")->unique();
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('image_id')->nullable();
+            
             $table->timestamps();
 
-            $table->foreign('image_id')
-                  ->references('id')->on('files')
-                  ->onDelete('cascade');
+            
         });
     }
 

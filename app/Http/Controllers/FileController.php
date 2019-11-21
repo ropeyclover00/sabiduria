@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\File;
 use Illuminate\Http\Request;
+use Files;
 
 class FileController extends Controller
 {
+
+    public function getFile($key)
+    {
+        $file = Files::getPath($key);
+        return response()->file($file);
+    }
     /**
      * Display a listing of the resource.
      *
