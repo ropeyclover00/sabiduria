@@ -6,7 +6,10 @@
 	<div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-            	<div class="card-header">Formulario de Categorias</div>
+            	<div class="card-header">
+            		Formulario de Categorias
+					<a class="float-right" href="{{route('categoria.index')}}">Regresar</a> 
+            	</div>
             	<div class="card-body">
     				@if ($errors->any())
 					<div class="alert alert-danger">

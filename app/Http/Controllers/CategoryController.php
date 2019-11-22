@@ -57,8 +57,10 @@ class CategoryController extends Controller
 
         if($request->has('file'))
             $file = Files::save($request->file('file'), $category, 'images/categorias');
-                    
-        return redirect()->route('categoria.index');
+        
+        $toastr = ['toastr' => 'success', 'msg' => 'Categoria agregada con éxito'];
+
+        return redirect()->route('categoria.index')->with($toastr);
     }
 
     /**
@@ -115,7 +117,9 @@ class CategoryController extends Controller
             $file = Files::save($request->file('file'), $categorium, 'images/categorias');
         }
 
-        return redirect()->route('categoria.show', $categorium->id);
+        $toastr = ['toastr' => 'success', 'msg' => 'Categoria actualizada con éxito!'];
+
+        return redirect()->route('categoria.show', $categorium->id)->with($toastr);
     }
 
     /**
@@ -131,8 +135,11 @@ class CategoryController extends Controller
             Files::delete($file->id);
         }
 
+        $nombre = $categorium->name;
         $categorium->delete();
 
-        return redirect()->route('categoria.index');
+        $toastr = ['toastr' => 'warning', 'msg' => 'Categoria: '.$nombre.' eliminada'];
+
+        return redirect()->route('categoria.index')->with($toastr);
     }
 }

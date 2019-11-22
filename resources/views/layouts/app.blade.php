@@ -16,9 +16,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/toastr/toastr.min.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -80,8 +81,39 @@
             @yield('content')
         </main>
     </div>
+
+
     
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('vendor/sweetalert/sweetalert2.min.js') }}"></script>
+    <!-- SCRIPT PARA LAS NOTIFICACIONES BONIS uwu -->
+    <script>
+       
+       @if(Session::has('toastr') && Session::has('msg'))
+
+            var type = "{{ Session::get('toastr') }}";
+            var msg =  "{{ Session::get('msg') }}";
+
+            switch(type)
+            {
+                case 'success':
+                    toastr.success(msg);
+                    break;
+                case 'warning':
+                    toastr.warning(msg);
+                    break;
+                case 'info':
+                    toastr.info(msg);
+                    break;
+                case 'error':
+                    toastr.error(msg);
+                    break;
+            }
+
+       @endif
+       
+    </script>
     @yield('script')
 
 </body>
