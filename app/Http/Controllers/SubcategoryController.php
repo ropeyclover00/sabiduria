@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Subcategory;
+use App\{Category,Subcategory};
 use Illuminate\Http\Request;
+use App\Http\Requests\SubcategoryFormRequest;
+use Files;
 
 class SubcategoryController extends Controller
 {
@@ -14,7 +16,15 @@ class SubcategoryController extends Controller
      */
     public function index()
     {
-        //
+        $subcategories = Subcategory::with(['files', 'category'])->get();
+
+        foreach ($subcategories as $key => &$subcategory) {
+            if(isset($subcategory->files[0]))
+                $subcategory->imgUrl = Files::getUrl($subcategory->files[0]->id);
+        }
+
+        return view('subcategorias.index', compact('subcategories'));
+
     }
 
     /**
@@ -24,18 +34,32 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::select('id', 'name')->get();
+        return view('subcategorias.form', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\SubcategoryFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubcategoryFormRequest $request)
     {
-        //
+        $subcategory = new Subcategory();
+        $subcategory->fill($request->all());
+        $subcategory->slug = $subcategory->name;
+
+        //dd($category);
+
+        $subcategory->save();
+
+        if($request->has('file'))
+            $file = Files::save($request->file('file'), $subcategory, 'images/subcategorias');
+        
+        $toastr = ['toastr' => 'success', 'msg' => 'Subcategoria agregada con éxito'];
+
+        return redirect()->route('subcategoria.index')->with($toastr);
     }
 
     /**
@@ -44,9 +68,14 @@ class SubcategoryController extends Controller
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function show(Subcategory $subcategory)
+    public function show(Subcategory $subcategorium)
     {
-        //
+        $subcategory = $subcategorium;
+
+        if(isset($subcategory->files[0]))
+            $subcategory->imgUrl = Files::getUrl($subcategory->files[0]->id);
+
+        return view('subcategorias.show', compact('subcategory'));
     }
 
     /**
@@ -55,21 +84,42 @@ class SubcategoryController extends Controller
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subcategory $subcategory)
+    public function edit(Subcategory $subcategorium)
     {
-        //
+        $subcategory = $subcategorium;
+        $categories = Category::select('id', 'name')->get();
+
+        if(isset($subcategory->files[0]))
+            $subcategory->imgUrl = Files::getUrl($subcategory->files[0]->id);
+
+        return view('subcategorias.form', compact('subcategory', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\SubcategoryFormRequest  $request
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subcategory $subcategory)
+    public function update(SubcategoryFormRequest $request, Subcategory $subcategorium)
     {
-        //
+        $subcategorium->fill($request->all());
+        $subcategorium->slug = $subcategorium->name;
+        $subcategorium->save();
+
+        if($request->has('file'))
+        {
+            //Si hay una imagen ya cargada se elimina
+            if(isset($subcategorium->files[0]))
+                Files::delete($subcategorium->files[0]->id);
+
+            $file = Files::save($request->file('file'), $subcategorium, 'images/subcategorias');
+        }
+
+        $toastr = ['toastr' => 'success', 'msg' => 'Subcategoria actualizada con éxito!'];
+
+        return redirect()->route('subcategoria.show', $subcategorium->id)->with($toastr);
     }
 
     /**
@@ -78,8 +128,17 @@ class SubcategoryController extends Controller
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subcategory $subcategory)
+    public function destroy(Subcategory $subcategorium)
     {
-        //
+        foreach ($subcategorium->files as $key => $file) {
+            Files::delete($file->id);
+        }
+
+        $nombre = $subcategorium->name;
+        $subcategorium->delete();
+
+        $toastr = ['toastr' => 'warning', 'msg' => 'Subcategoria: '.$nombre.' eliminada'];
+
+        return redirect()->route('subcategoria.index')->with($toastr);
     }
 }

@@ -12,7 +12,7 @@
 		
 		@if(count($categories))
 
-		<table class="table">
+		<table class="table table-striped table-bordered table-hover">
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">ID</th>

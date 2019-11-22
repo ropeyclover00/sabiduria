@@ -15,11 +15,13 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="stylesheet" type="text/css" href="{{asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/toastr/toastr.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/select2.min.css')}}">
 </head>
 <body>
     <div id="app">
@@ -43,6 +45,9 @@
                         <!-- Authentication Links -->
                         <li>
                             <a class="btn btn-sucess" href="{{ route('categoria.index') }}">Categorias</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-sucess" href="{{ route('subcategoria.index') }}">Subcategorias</a>
                         </li>
                         @guest
                             <li class="nav-item">
@@ -87,6 +92,7 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert2.min.js') }}"></script>
+    
     <!-- SCRIPT PARA LAS NOTIFICACIONES BONIS uwu -->
     <script>
        

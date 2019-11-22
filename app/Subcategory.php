@@ -9,6 +9,11 @@ class Subcategory extends Model
 {
 	protected $fillable = ['name', 'description', 'slug', 'image_id', 'category_id'];
 
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+
     public function files()
     {
         return $this->morphMany(File::class, 'fileable');
@@ -22,16 +27,6 @@ class Subcategory extends Model
     public function blogs()
     {
     	return $this->hasMany('App\Blog');
-    }
-
-    public function setNameAttribute($value)
-    {
-    	$this->attributes['name'] = strtoupper($value);
-    }
-
-    public function getNameAttribute($value)
-    {
-        return ucfirst(strtolower($value));
     }
 
     public function setSlugAttribute($value)
