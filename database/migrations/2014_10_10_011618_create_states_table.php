@@ -20,7 +20,12 @@ class CreateStatesTable extends Migration
             $table->string('longitude');
             $table->string('latitude');
             $table->integer('zoom');
+            $table->unsignedBigInteger('country_id');
             $table->timestamps();
+
+            $table->foreign('country_id')
+                  ->references('id')->on('countries')
+                  ->onDelete('cascade');
         });
     }
 

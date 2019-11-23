@@ -27,3 +27,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/file/{key}', "FileController@getFile");
 Route::resource('categoria', "CategoryController");
 Route::resource('subcategoria', "SubcategoryController");
+Route::resource('tag', "TagController");
+Route::resource('editorial', "EditorialController");
+Route::resource('autor', "AuthorController");

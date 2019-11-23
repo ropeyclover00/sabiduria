@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Subcategory extends Model
 {
-	protected $fillable = ['name', 'description', 'slug', 'image_id', 'category_id'];
+	protected $fillable = ['name', 'description', 'slug', 'category_id'];
 
     public function category()
     {

@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Tag extends Model
 {
-    protected $fillable = ['name', 'description', 'slug', 'image_id'];
+    protected $fillable = ['name', 'description', 'slug'];
 
     public function blogs()
     {

@@ -49,6 +49,15 @@
                         <li>
                             <a class="btn btn-sucess" href="{{ route('subcategoria.index') }}">Subcategorias</a>
                         </li>
+                         <li>
+                            <a class="btn btn-sucess" href="{{ route('tag.index') }}">Tags</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-sucess" href="{{ route('editorial.index') }}">Editoriales</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-sucess" href="{{ route('autor.index') }}">Autores</a>
+                        </li>
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

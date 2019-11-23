@@ -16,7 +16,7 @@ class SubcategoryController extends Controller
      */
     public function index()
     {
-        $subcategories = Subcategory::with(['files', 'category'])->get();
+        $subcategories = Subcategory::with(['files', 'category'])->paginate(10);
 
         foreach ($subcategories as $key => &$subcategory) {
             if(isset($subcategory->files[0]))

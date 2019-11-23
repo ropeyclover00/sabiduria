@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::with(['files'])->get();
+        $categories = Category::with(['files'])->paginate(10);
 
         foreach ($categories as $key => &$category) {
             if(isset($category->files[0]))

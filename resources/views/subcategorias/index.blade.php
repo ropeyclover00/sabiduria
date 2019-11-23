@@ -44,7 +44,8 @@
 					</tr>
 				@endforeach
 			</tbody>
-		</table>		
+		</table>	
+		{{ $subcategories->links() }}	
 		@else
 		<h4 style="color:blue">No hay información en la base de datos.</h4>
 		@endif

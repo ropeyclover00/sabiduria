@@ -5,9 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Files;
 
-class Editorial extends Model
+class Author extends Model
 {
-    protected $fillable = ['name', 'address', 'phone', 'email', 'url', 'country_id'];
+    protected $fillable = ['name', 'last_name', 'country_id', 'birthday', 'email', 'address'];
+
+    protected $dates = ['birthday'];
 
     public function country()
     {
@@ -37,5 +39,10 @@ class Editorial extends Model
             $url = Files::getUrl($this->image->id);
 
         return $url;
+    }
+
+    public function getFullNameAttribute()
+    {
+    	return "{$this->name} {$this->last_name}";
     }
 }

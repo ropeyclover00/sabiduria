@@ -18,24 +18,21 @@ class CreateProductsTable extends Migration
 
             $table->string('name');
             $table->text('description');
-            $table->string("authors");
+            $table->string("isbn");
+            $table->string("year");
+
             $table->string("slug")->unique();
             $table->float('price')->default(0);
             $table->unsignedInteger('stock')->default(0);
             $table->boolean('status')->default(1); //0->Inactivo, 1->Activo
             $table->boolean('outstanding')->default(1); //0->Inactivo, 1->Activo
 
-            $table->unsignedBigInteger('image_id')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('subcategory_id');
+            $table->unsignedBigInteger("country_id");
             
             $table->softDeletes();
             $table->timestamps();
-
-
-            $table->foreign('image_id')
-                  ->references('id')->on('files')
-                  ->onDelete('cascade');
 
             $table->foreign('category_id')
                   ->references('id')->on('categories')
@@ -43,6 +40,10 @@ class CreateProductsTable extends Migration
 
             $table->foreign('subcategory_id')
                   ->references('id')->on('subcategories')
+                  ->onDelete('cascade');
+
+            $table->foreign("country_id")
+                  ->references('id')->on("countries")
                   ->onDelete('cascade');
 
         });

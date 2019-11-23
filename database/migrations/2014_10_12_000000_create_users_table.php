@@ -33,7 +33,6 @@ class CreateUsersTable extends Migration
             $table->string('cellphone')->nullable();
             $table->unsignedBigInteger('city_id')->unsigned()->nullable();
             $table->unsignedBigInteger('state_id')->unsigned()->nullable();
-            $table->unsignedBigInteger('image_id')->unsigned()->nullable();
             
             $table->rememberToken();
             $table->timestamps();
@@ -44,10 +43,6 @@ class CreateUsersTable extends Migration
 
             $table->foreign('city_id')
                   ->references('id')->on('cities')
-                  ->onDelete('cascade');
-
-            $table->foreign('image_id')
-                  ->references('id')->on('files')
                   ->onDelete('cascade');
         });
     }

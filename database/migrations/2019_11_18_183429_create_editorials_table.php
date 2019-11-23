@@ -16,11 +16,16 @@ class CreateEditorialsTable extends Migration
         Schema::create('editorials', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string("name");
-            $table->unsignedBigInteger('image_id')->nullable();
+            $table->text("address");
+            $table->string("phone");
+            $table->string("email")->nullable();
+            $table->string("url")->nullable();
+            $table->unsignedBigInteger('country_id'); //Pais de origen
+
             $table->timestamps();
 
-            $table->foreign('image_id')
-                  ->references('id')->on('files')
+            $table->foreign("country_id")
+                  ->references('id')->on("countries")
                   ->onDelete('cascade');
         });
     }
