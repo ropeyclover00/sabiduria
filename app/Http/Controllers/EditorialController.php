@@ -117,5 +117,6 @@ class EditorialController extends Controller
 
         $toastr = ['toastr' => 'warning', 'msg' => 'Editorial: '.$nombre.' eliminada'];
         return redirect()->route('editorial.index')->with($toastr);
+        
     }
 }

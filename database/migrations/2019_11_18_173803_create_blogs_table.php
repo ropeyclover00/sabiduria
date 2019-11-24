@@ -21,7 +21,6 @@ class CreateBlogsTable extends Migration
             $table->boolean('status')->default(1); //0->Inactivo, 1->Activo
 
             $table->unsignedBigInteger("user_id");
-            
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('subcategory_id');
             

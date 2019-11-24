@@ -33,7 +33,7 @@ class CategoryFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'file.image' => "De subir una imagen al servidor",
+            'file.image' => "Debe subir una imagen al servidor",
             'file.mimes' => 'Solo se permite subir imagenes con extension jpeg, bmp, png, jpg o gif',
             'file.max' => 'Solo se permite subir imagenes con un peso maximo de 2MB',
             'name.required' => 'La categoria debe tener un nombre',

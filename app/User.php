@@ -52,6 +52,11 @@ class User extends Authenticatable
         return "{$this->name} {$this->last_name}";
     }
 
+    public function getFormalNameAttribute()
+    {
+        return "{$this->last_name}, {$this->name}";
+    }
+
     public function getStateNameAttribute()
     {
         return $this->state->name;
@@ -62,26 +67,7 @@ class User extends Authenticatable
         return $this->state->name;
     }
 
-    public function getNameAttribute($value)
-    {
-        return ucfirst(strtolower($value));
-    }
-
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = strtoupper($value);
-    }
-
-    public function getLastNameAttribute($value)
-    {
-        return ucfirst(strtolower($value));
-    }
-
-    public function setLastNameAttribute($value)
-    {
-        $this->attributes['last_name'] = strtoupper($value);
-    }
-
+    
     public function files()
     {
         return $this->morphMany(File::class, 'fileable');

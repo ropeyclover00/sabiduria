@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <div class="card">
             	<div class="card-header">
-            		Formulario de Autores
+            		Formulario de  
 					<a class="float-right" href="{{route('autor.index')}}">Regresar</a> 
             	</div>
             	<div class="card-body">

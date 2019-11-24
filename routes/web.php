@@ -30,3 +30,5 @@ Route::resource('subcategoria', "SubcategoryController");
 Route::resource('tag', "TagController");
 Route::resource('editorial', "EditorialController");
 Route::resource('autor', "AuthorController");
+Route::resource('blog', "BlogController");
+Route::post('/file_blog/{blog_id}', 'BlogController@uploadFile')->name('file_blog');

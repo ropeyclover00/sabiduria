@@ -9,10 +9,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
+    <!-- Scripts 
     <script src="{{ asset('js/app.js') }}" defer></script>
-
-
+    -->
+    
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="stylesheet" type="text/css" href="{{asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
@@ -21,7 +21,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/toastr/toastr.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/select2.min.css')}}">
+    <link href="{{ asset('vendor/select2/select2.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/dropzone/min/dropzone.min.css')}}" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="app">
@@ -57,6 +58,9 @@
                         </li>
                         <li>
                             <a class="btn btn-sucess" href="{{ route('autor.index') }}">Autores</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-sucess" href="{{ route('blog.index') }}">Blogs</a>
                         </li>
                         @guest
                             <li class="nav-item">
@@ -99,6 +103,8 @@
 
     
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/popper.min.js/') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js/') }}"></script>
     <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert2.min.js') }}"></script>
     
