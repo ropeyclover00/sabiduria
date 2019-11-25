@@ -18,7 +18,7 @@ class Author extends Model
 
     public function products()
     {
-    	return $this->belongsToMany('App\Product');
+    	return $this->belongsToMany('App\Product', 'authors_has_products', 'author_id', 'product_id');
     }
 
     public function files()
@@ -44,5 +44,19 @@ class Author extends Model
     public function getFullNameAttribute()
     {
     	return "{$this->name} {$this->last_name}";
+    }
+
+    public function getProductsStringAttribute()
+    {
+        $products = "N/A";
+        if(count($this->products))
+        {
+            $products = "";
+            foreach ($this->products as $product) 
+                $products .= $product->name . ", ";
+        
+            $products =  substr($products, 0, strlen($products) - 2);    
+        }
+        return $products;
     }
 }

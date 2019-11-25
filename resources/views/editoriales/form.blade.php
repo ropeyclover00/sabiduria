@@ -37,9 +37,10 @@
 								<input id="name" 
 									   type="text" 
 									   name="name" 
-									   value="{{ $editorial->name ?? '' }}{{ old('name') }}" 
+									   value="@if(empty(old('name'))){{ $editorial->name ?? '' }}@endif{{ old('name') }}"
 									   class="form-control"
 									   required>
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>	
 
@@ -51,7 +52,8 @@
 										  name="address" 
 										  id="address" 
 										  rows="4"
-										  >{{ $editorial->address ?? '' }}{{old('address')}}</textarea>
+										  >@if(empty(old('address'))){{ $editorial->address ?? '' }}@endif{{ old('address') }}</textarea>
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>	
 
@@ -62,9 +64,10 @@
 								<input id="phone" 
 									   type="text" 
 									   name="phone" 
-									   value="{{ $editorial->phone ?? '' }}{{ old('phone') }}" 
+									   value="@if(empty(old('phone'))){{ $editorial->phone ?? '' }}@endif{{ old('phone') }}" 
 									   class="form-control"
 									   required>
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>							
 
@@ -75,7 +78,7 @@
 								<input id="email" 
 									   type="email" 
 									   name="email" 
-									   value="{{ $editorial->email ?? '' }}{{ old('email') }}" 
+									   value="@if(empty(old('email'))){{ $editorial->email ?? '' }}@endif{{ old('email') }}" 
 									   class="form-control">
 							</div>
 						</div>	
@@ -87,7 +90,7 @@
 								<input id="url" 
 									   type="url" 
 									   name="url" 
-									   value="{{ $editorial->url ?? '' }}{{ old('url') }}" 
+									   value="@if(empty(old('url'))){{ $editorial->url ?? '' }}@endif{{ old('url') }}" 
 									   class="form-control">
 							</div>
 						</div>	
@@ -97,22 +100,20 @@
 							<label class="col-md-3 col-form-label text-md-right" for="country_id">País</label>
 							<div class="col-8">
 								<select class="form-control" name="country_id" id="country_id" required>
-									<option value="null" 
-										@if(empty($editorial))
-											selected
-										@endif 
-									>
+									<option>
 										Seleccione una opción
 									</option>
 									@foreach($countries as $country)
 										<option value="{{$country->id}}" 
-											@if(!empty($editorial) && $editorial->country_id == $country->id) 
-												selected @endif
+											@if(old('country_id') == $country->id || (!empty($editorial) && $editorial->country_id == $country->id)) 
+												selected 
+											@endif
 										>
 											{{$country->name}}
 										</option>
 									@endforeach
 								</select>
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>						
 

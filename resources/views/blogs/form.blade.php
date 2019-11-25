@@ -39,7 +39,7 @@
 						    </ul>
 						</div>
 						@endif
-						<!-- Formulario --->
+						<!-- Formulario -->
 						@if(isset($blog))
 						{!! Form::model($blog, ['route' => ['blog.update', $blog->id], 'files' => true]) !!}
 						<!--<form action="{{ route('blog.update', $blog->id) }}" method="POST">-->
@@ -71,6 +71,7 @@
 											</option>
 										@endforeach
 									</select>
+									<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 								</div>
 							</div>						
 
@@ -84,6 +85,7 @@
 										   value="@if(empty(old('name'))){{ $blog->name ?? '' }}@endif{{ old('name') }}" 
 										   class="form-control"
 										   required>
+									<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 								</div>
 							</div>	
 
@@ -92,7 +94,7 @@
 								<label class="col-md-3 col-form-label text-md-right" for="category_id">Categorias</label>
 								<div class="col-8">
 									<select class="form-control" name="category_id" id="category_id" required>
-										<option>Seleccione una opción {{old('category_id')}}</option>
+										<option>Seleccione una opción</option>
 										@foreach($categories as $category)
 											<option value="{{$category->id}}" 
 												@if( (!empty($blog) && $blog->category_id == $category->id ) || old('category_id') == $category->id) 
@@ -102,6 +104,7 @@
 											</option>
 										@endforeach
 									</select>
+									<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 								</div>
 							</div>	
 
@@ -110,15 +113,9 @@
 								<label class="col-md-3 col-form-label text-md-right" for="subcategory_id">Subcategoria</label>
 								<div class="col-8">
 									<select class="form-control" name="subcategory_id" id="subcategory_id" required>
-										<option 
-											@if(empty($blog))
-												selected
-											@endif 
-										>
-											Seleccione una opción
-										</option>
-										
+										<option>Seleccione una opción</option>
 									</select>
+									<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 								</div>
 							</div>	
 
@@ -137,6 +134,7 @@
 											</option>
 										@endforeach
 									</select>
+									<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 								</div>
 							</div>	
 
@@ -151,14 +149,15 @@
 							
 							<div class="form-group row">	
 								<label class="col-md-3 col-form-label text-md-right" for="user_id">Contenido</label>
+
 							</div>
 
 							<!-- CONTENIDO -->
 							<div class="form-group row">	
 								
-
 								<div class="row">
 									<div class="col-md-12 offset-1">
+										<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 										<textarea class="form-control" 
 												  name="content" 
 												  id="contenido" 
@@ -197,7 +196,8 @@
 					</div>
 
 	    			<div class="tab-pane fade mt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-	    				<h3>Suelta o selecciona los archvios:<br> pdf, word, excel o power point</h3>
+	    				@if(!empty($blog))
+	    				<h3>Suelta o selecciona los archivos: pdf, word, excel o power point</h3>
 	    				<div class="row">
 	    					<div class="col-8 offset-2">
 	    						<form action="{{ route('file_blog', $blog->id ?? null) }}" id="dropzone" class="dropzone" method="POST" enctype="multipart/form-data">
@@ -205,6 +205,44 @@
 	    						</form>
 	    					</div>
 	    				</div>
+	    				@endif
+	    				<h4 class="mt-4">Documentos cargados</h4>
+	    				<div class="row w-100">
+	    					@if(!empty($blog) && count($blog->documents))
+	    					<table class="table">
+	    						<thead>
+	    							<th>Archivo</th>
+	    							<th></th>
+	    							<th></th>
+	    						</thead>
+	    						<tbody>
+	    							@foreach($blog->documents as $doc)
+	    							<tr>
+	    								<td>{{$doc['name']}}</td>
+	    								<td>
+	    									<a href="{!! $doc['url'] !!}" download>
+	    										<i class="fa fa-file"></i>Descarga
+	    									</a>
+	    								</td>
+	    								<td>
+	    									<form 	method="POST" 
+											onsubmit="return confirmacion()" 
+											action="{{ route('delete_file_blog', $doc['id']) }}">
+											
+												@method("DELETE")
+												@csrf
+												<button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+											</form>	
+	    								</td>
+	    							</tr>
+			    					@endforeach		
+	    						</tbody>
+	    					</table>
+	    					@else
+	    					<p>No hay archivos.</p>
+	    					@endif
+	    				</div>
+
 	    			</div>
         		
             	</div>
@@ -231,11 +269,11 @@
 	var tags_blog = @if(!empty($blog)) @json($blog->tags_ids) @else null @endif;
 
 
-	Dropzone.options.dropzone = {
+	/*Dropzone.options.dropzone = {
 		init: function() {
 			this.on("success", function(file) { this.removeFile(file) });
 		}
-	}
+	}*/
 
 	$(function(){
 
@@ -320,7 +358,16 @@
 				tagSelect.append('<option value="' + tags[i].id + '" ' + selected +'>' + tags[i].name + '</option>');	
 			}
 		}
-	})
+
+	});
+
+	function confirmacion(id)
+	{
+		
+
+		return confirm('¿Seguro que desea eliminar este archivo?')
+		
+	}
 	
 </script>
 

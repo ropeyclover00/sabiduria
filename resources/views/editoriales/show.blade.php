@@ -74,6 +74,15 @@
 							{{ $editorial->country->name }}
 						</div>
 					</div>
+
+					<div class="row w-100 mt-4">
+						<div class="col-2" style="text-align: right;">
+							<b>Libros</b>
+						</div>
+						<div class="col-9">
+							{{ $editorial->products_string }}
+						</div>
+					</div>
 					
 					<div class="row w-100 mt-4">
 						<div class="col-2" style="text-align: right;">

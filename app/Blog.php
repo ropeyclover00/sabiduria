@@ -60,9 +60,10 @@ class Blog extends Model
 
     public function getTagsStringAttribute()
     {
-        $tags = "";
+        $tags = "N/A";
         if(count($this->tags))
         {
+            $tags = "";
             foreach ($this->tags as $tag) 
                 $tags .= $tag->name . ", ";
         
@@ -114,5 +115,24 @@ class Blog extends Model
             $url = Files::getUrl($this->image->id);
 
         return $url;
+    }
+
+    public function getDocumentsAttribute()
+    {
+        $docs = [];
+
+        foreach ($this->files as $key => $file) {
+
+            if(strrpos($file->mime, 'image') === false)
+            {
+                $docs[] = [
+                    'name' => $file->name,
+                    'url' => Files::getUrl($file->id),
+                    'id' => $file->id
+                ];
+            }
+        }
+
+        return $docs;
     }
 }

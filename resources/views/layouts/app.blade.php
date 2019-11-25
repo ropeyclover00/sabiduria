@@ -62,6 +62,9 @@
                         <li>
                             <a class="btn btn-sucess" href="{{ route('blog.index') }}">Blogs</a>
                         </li>
+                        <li>
+                            <a class="btn btn-sucess" href="{{ route('producto.index') }}">Productos</a>
+                        </li>
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

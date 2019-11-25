@@ -39,7 +39,7 @@
 									   value="{{ $category->name ?? '' }}{{ old('name') }}" 
 									   class="form-control"
 									   required>
-
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>	
 

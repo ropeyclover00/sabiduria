@@ -128,11 +128,12 @@ class BlogController extends Controller
     {
         $nombre = $blog->name;
 
-        if($blog->image)
-            Files::delete($blog->image->id);
+        foreach ($blog->files as $key => $value) {
+            Files::delete($value->id);
+        }
 
         $blog->tags()->detach();
-
+        $blog->comments()->detach();
         $blog->delete();
 
         $toastr = ['toastr' => 'warning', 'msg' => 'Blog: '.$nombre.' eliminado'];
@@ -149,5 +150,12 @@ class BlogController extends Controller
         }
 
         return response()->json(["msg" => "No existe el blog"], 400);
+    }
+
+    public function deleteFile($file_id)
+    {
+        Files::delete($file_id);
+        $toastr = ['toastr' => 'success', 'msg' => 'Archivo eliminado con éxito!!'];
+        return redirect()->back()->with($toastr);
     }
 }

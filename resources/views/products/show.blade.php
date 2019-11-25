@@ -7,8 +7,8 @@
         <div class="col-md-8">
             <div class="card">
             	<div class="card-header">
-            		Datos del blog 
-            		<a class="float-right" href="{{route('blog.index')}}">Regresar</a> 
+            		Datos del producto 
+            		<a class="float-right" href="{{route('producto.index')}}">Regresar</a> 
             	</div>
             	<div class="card-body">
 
@@ -17,7 +17,7 @@
 							<b>ID:</b>
 						</div>
 						<div class="col-9">
-							{{$blog->id}}
+							{{$producto->id}}
 						</div>
 					</div>
 
@@ -26,7 +26,7 @@
 							<b>Estatus:</b>
 						</div>
 						<div class="col-9">
-							{{$blog->estatus}}
+							{{$producto->estatus}}
 						</div>
 					</div>
 
@@ -35,7 +35,10 @@
 							<b>Nombre:</b>
 						</div>
 						<div class="col-9">
-							{{$blog->name}}
+							{{$producto->name}}
+							@if($producto->outstanding)
+								&nbsp;<span style="color:red">*producto destacado</span>
+							@endif
 						</div>
 					</div>
 	
@@ -44,16 +47,52 @@
 							<b>Slug:</b>
 						</div>
 						<div class="col-9">
-							{{ $blog->slug }}
+							{{ $producto->slug }}
 						</div>
 					</div>
 
 					<div class="row w-100 mt-4">
 						<div class="col-3" style="text-align: right;">
-							<b>Autor:</b>
+							<b>ISBN:</b>
 						</div>
 						<div class="col-9">
-							{{ $blog->author_name }}
+							{{$producto->isbn}}
+						</div>
+					</div>
+
+					<div class="row w-100 mt-4">
+						<div class="col-3" style="text-align: right;">
+							<b>País de origen:</b>
+						</div>
+						<div class="col-9">
+							{{$producto->country->name}}
+						</div>
+					</div>
+
+					<div class="row w-100 mt-4">
+						<div class="col-3" style="text-align: right;">
+							<b>Año de publicación:</b>
+						</div>
+						<div class="col-9">
+							{{$producto->year}}
+						</div>
+					</div>
+
+					<div class="row w-100 mt-4">
+						<div class="col-3" style="text-align: right;">
+							<b>Autores:</b>
+						</div>
+						<div class="col-9">
+							{{ $producto->authors_string }}
+						</div>
+					</div>
+
+					<div class="row w-100 mt-4">
+						<div class="col-3" style="text-align: right;">
+							<b>Editoriales:</b>
+						</div>
+						<div class="col-9">
+							{{ $producto->editorials_string }}
 						</div>
 					</div>
 
@@ -62,7 +101,7 @@
 							<b>Categoria:</b>
 						</div>
 						<div class="col-9">
-							{{$blog->category_name}}
+							{{$producto->category_name}}
 						</div>
 					</div>
 
@@ -72,19 +111,35 @@
 							<b>Subcategoria:</b>
 						</div>
 						<div class="col-9">
-							{{$blog->subcategory_name}}
+							{{$producto->subcategory_name}}
+						</div>
+					</div>
+
+					<div class="row w-100 mt-4">
+						<div class="col-3" style="text-align: right;">
+							<b>Precio:</b>
+						</div>
+						<div class="col-9">
+							{{$producto->price}}
+						</div>
+					</div>
+
+					<div class="row w-100 mt-4">
+						<div class="col-3" style="text-align: right;">
+							<b>Stock:</b>
+						</div>
+						<div class="col-9">
+							{{$producto->stock}}
 						</div>
 					</div>
 
 					<div class="row w-100 mt-4">
 						<div class="col-2" style="text-align: right;">
-							<b>Contenido:</b>
+							<b>Descripción:</b>
 						</div>
-						<div class="row w-100" style="margin-left: 15px;">
-							<div class="col-12 " style="border: solid thin; padding: 10px; ">
-								{!! $blog->content !!}
-							</div>	
-						</div>						
+						<div class="col-10">
+							{!! $producto->description !!}
+						</div>
 					</div>
 					
 					<div class="row w-100 mt-4">
@@ -92,29 +147,17 @@
 							<b>Tags:</b>
 						</div>
 						<div class="col-9">
-							{{$blog->tags_string}}
+							{{$producto->tags_string}}
 						</div>
 					</div>
-
-					<h4 class="mt-4">Documentos cargados</h4>
-    				<div class="row w-100">
-    					@if(!count($blog->documents))
-							<p>No hay documentos.</p>
-    					@endif
-    					@foreach($blog->documents as $doc)
-							<div class="col-4">
-								<a href="{!! $doc['url'] !!}"><i class="fa fa-file"></i>{!! $doc['name'] !!}</a>
-							</div>
-    					@endforeach
-    				</div>
 
 					<div class="row w-100 mt-4">
 						<div class="col-3" style="text-align: right;">
 							<b>Imagen:</b>
 						</div>
 						<div class="col-9">
-							@if($blog->img_url)
-								<img src="{{ $blog->img_url }}" alt="" width="50%">
+							@if($producto->img_url)
+								<img src="{{ $producto->img_url }}" alt="" width="50%">
 							@else
 								N/A
 							@endif
@@ -123,7 +166,7 @@
 										
 					<div class="row mt-4">
 						<div class="offset-4 col-2">
-							<a href="{{route('blog.edit', $blog->id)}}" class="btn btn-sm btn-info">
+							<a href="{{route('producto.edit', $producto->id)}}" class="btn btn-sm btn-info">
 								Editar
 							</a>
 							
@@ -132,7 +175,7 @@
 						<div class="col-2">
 							<form 	method="POST" 
 							onsubmit="return confirmacion()" 
-							action="{{ route('blog.destroy', $blog->id) }}">
+							action="{{ route('producto.destroy', $producto->id) }}">
 							
 								@method("DELETE")
 								@csrf

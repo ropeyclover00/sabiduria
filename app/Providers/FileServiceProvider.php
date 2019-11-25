@@ -33,7 +33,7 @@ class FileServiceProvider extends ServiceProvider
         $hash = Storage::disk($disk)->putFile($folder, $file);
 
         $result = $modelo->files()->create([
-                    'original' => $file->getClientOriginalName(),
+                    'name' => $file->getClientOriginalName(),
                     'hash' => $hash,
                     'mime' => $file->getClientMimeType(),
                     'size' => $file->getClientSize(),

@@ -25,7 +25,7 @@ class CreateProductsTable extends Migration
             $table->float('price')->default(0);
             $table->unsignedInteger('stock')->default(0);
             $table->boolean('status')->default(1); //0->Inactivo, 1->Activo
-            $table->boolean('outstanding')->default(1); //0->Inactivo, 1->Activo
+            $table->boolean('outstanding')->default(0); //0->Inactivo, 1->Activo
 
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('subcategory_id');
@@ -56,6 +56,8 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropSoftDeletes(); //add this line
+        });
     }
 }

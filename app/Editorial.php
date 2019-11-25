@@ -16,7 +16,7 @@ class Editorial extends Model
 
     public function products()
     {
-    	return $this->belongsToMany('App\Product');
+    	return $this->belongsToMany('App\Product', 'products_has_editorials', 'editorial_id', 'product_id');
     }
 
     public function files()
@@ -37,5 +37,19 @@ class Editorial extends Model
             $url = Files::getUrl($this->image->id);
 
         return $url;
+    }
+
+    public function getProductsStringAttribute()
+    {
+        $products = "N/A";
+        if(count($this->products))
+        {
+            $products = "";
+            foreach ($this->products as $product) 
+                $products .= $product->name . ", ";
+        
+            $products =  substr($products, 0, strlen($products) - 2);    
+        }
+        return $products;
     }
 }

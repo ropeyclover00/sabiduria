@@ -24,7 +24,7 @@ class TagFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:191',
+            'name' => 'required|string|max:191|unique:tags,name,'.($this->tag->id ?? '').",id",
             'description' => 'nullable|string'
         ];
     }
@@ -32,8 +32,9 @@ class TagFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'La categoria debe tener un nombre',
-            'name.string' => 'El nombre de la categoria debe ser un string'
+            'name.required' => 'El tag debe tener un nombre',
+            'name.string' => 'El nombre del tag debe ser un string',
+            'name.unique' => 'Ese nombre ya fue tomado'
         ];
     }
 }

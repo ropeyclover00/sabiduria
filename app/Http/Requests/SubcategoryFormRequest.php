@@ -25,7 +25,7 @@ class SubcategoryFormRequest extends FormRequest
     {
         return [
              
-                'name' => 'required|string|max:191',
+                'name' => 'required|string|max:191|unique:subcategories,name,'.($this->subcategorium->id ?? '').",id",
                 'file' => 'image|mimes:jpeg,bmp,jpg,png,gif|max:3072',
                 'description' => 'nullable|string',
                 'category_id' => 'required|integer'
@@ -42,7 +42,8 @@ class SubcategoryFormRequest extends FormRequest
             'name.required' => 'La categoria debe tener un nombre',
             'name.string' => 'El nombre de la categoria debe ser un string',
             'category_id.required' => "Necesita seleccionar la categoria a la cual pertenece",
-            'category_id.integer' => "Necesita seleccionar la categoria a la cual pertenece"
+            'category_id.integer' => "Necesita seleccionar la categoria a la cual pertenece",
+            'name.unique' => 'El nombre ya fue utilizado'
         ];
     }
 }

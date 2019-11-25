@@ -24,7 +24,6 @@ class SubcategoryController extends Controller
         }
 
         return view('subcategorias.index', compact('subcategories'));
-
     }
 
     /**
@@ -130,6 +129,13 @@ class SubcategoryController extends Controller
      */
     public function destroy(Subcategory $subcategorium)
     {
+
+        if(count($subcategorium->products) || count($subcategorium->blogs))
+        {
+            $toastr = ['toastr' => 'error', 'msg' => 'Por integridad en la base de datos, no puede eliminar una subcategoria que tiene productos y/o blogs dependientes.'];
+            return redirect()->back()->with($toastr);
+        }
+
         foreach ($subcategorium->files as $key => $file) {
             Files::delete($file->id);
         }

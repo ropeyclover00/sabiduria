@@ -32,3 +32,5 @@ Route::resource('editorial', "EditorialController");
 Route::resource('autor', "AuthorController");
 Route::resource('blog', "BlogController");
 Route::post('/file_blog/{blog_id}', 'BlogController@uploadFile')->name('file_blog');
+Route::delete('/file_blog/{file_id}', 'BlogController@deleteFile')->name('delete_file_blog');
+Route::resource('producto', "ProductController");

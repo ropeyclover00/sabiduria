@@ -36,10 +36,10 @@
 								<input id="name" 
 									   type="text" 
 									   name="name" 
-									   value="{{ $subcategory->name ?? '' }}{{ old('name') }}" 
+									    value="@if(empty(old('name'))){{ $subcategory->name ?? '' }}@endif{{ old('name') }}" 
 									   class="form-control"
 									   required>
-
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>	
 
@@ -47,11 +47,7 @@
 							<label class="col-md-3 col-form-label text-md-right" for="category_id">Categoria</label>
 							<div class="col-8">
 								<select class="form-control" name="category_id" id="category_id" required>
-									<option value="null" 
-										@if(empty($subcategory))
-											selected
-										@endif 
-									>
+									<option>
 										Seleccione una opción
 									</option>
 									@foreach($categories as $category)
@@ -63,6 +59,7 @@
 										</option>
 									@endforeach
 								</select>
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>
 

@@ -49,7 +49,6 @@ class EditorialFormRequest extends FormRequest
             'country_id.integer' => 'Debe seleccionar el pais de la editorial',
             'email.email' => "Debe introducir un email válido",
             'url.url' => "Debe introducir una URL válida"
-
         ];
     }
 

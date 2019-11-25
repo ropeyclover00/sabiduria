@@ -131,6 +131,12 @@ class CategoryController extends Controller
     public function destroy(Category $categorium)
     {
         
+        if(count($categorium->subcategories))
+        {
+            $toastr = ['toastr' => 'error', 'msg' => 'Por integridad en la base de datos, no puede eliminar una categoria que tiene subcategorias dependientes.'];
+            return redirect()->back()->with($toastr);
+        }
+
         foreach ($categorium->files as $key => $file) {
             Files::delete($file->id);
         }

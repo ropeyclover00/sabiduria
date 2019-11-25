@@ -37,22 +37,24 @@
 								<input id="name" 
 									   type="text" 
 									   name="name" 
-									   value="{{ $autor->name ?? '' }}{{ old('name') }}" 
+									   value="@if(empty(old('name'))){{ $autor->name ?? '' }}@endif{{ old('name') }}"
 									   class="form-control"
 									   required>
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>	
 
-						<!-- NOMBRE -->
+						<!-- APELLIDO -->
 						<div class="form-group row">	
 							<label class="col-md-3 col-form-label text-md-right" for="last_name">	Apellidos </label>
 							<div class="col-md-8">
 								<input id="last_name" 
 									   type="text" 
 									   name="last_name" 
-									   value="{{ $autor->last_name ?? '' }}{{ old('last_name') }}" 
+									   value="@if(empty(old('last_name'))){{ $autor->last_name ?? '' }}@endif{{ old('last_name') }}"
 									   class="form-control"
 									   required>
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>	
 	
@@ -63,9 +65,10 @@
 								<input id="birthday" 
 									   type="date" 
 									   name="birthday" 
-									   value="{{ isset($autor->birthday) ? $autor->birthday->format('Y-m-d') : '' }}{{ old('birthday') }}" 
+									   value="@if(empty(old('birthday'))){{isset($autor->birthday) ? $autor->birthday->format('Y-m-d') : ''}}@endif{{ old('birthday') }}" 
 									   class="form-control"
 									   required>
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>		
 
@@ -77,7 +80,8 @@
 										  name="address" 
 										  id="address" 
 										  rows="4"
-										  >{{ $autor->address ?? '' }}{{old('address')}}</textarea>
+										  >@if(empty(old('address'))){{ $autor->address ?? '' }}@endif{{ old('address') }}</textarea>
+
 							</div>
 						</div>	
 
@@ -89,7 +93,7 @@
 								<input id="email" 
 									   type="email" 
 									   name="email" 
-									   value="{{ $autor->email ?? '' }}{{ old('email') }}" 
+									   value="@if(empty(old('email'))){{ $autor->email ?? '' }}@endif{{ old('email') }}" 
 									   class="form-control">
 							</div>
 						</div>	
@@ -99,22 +103,20 @@
 							<label class="col-md-3 col-form-label text-md-right" for="country_id">País</label>
 							<div class="col-8">
 								<select class="form-control" name="country_id" id="country_id" required>
-									<option value="null" 
-										@if(empty($autor))
-											selected
-										@endif 
-									>
+									<option>
 										Seleccione una opción
 									</option>
 									@foreach($countries as $country)
 										<option value="{{$country->id}}" 
-											@if(!empty($autor) && $autor->country_id == $country->id) 
-												selected @endif
+											@if(old('country_id') == $country->id || (!empty($autor) && $autor->country_id == $country->id)) 
+												selected 
+											@endif
 										>
 											{{$country->name}}
 										</option>
 									@endforeach
 								</select>
+								<span style="font-size: .8rem; color: red;">*campo obligatorio</span>
 							</div>
 						</div>						
 

@@ -24,7 +24,7 @@ class CategoryFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:191',
+            'name' => 'required|string|max:191|unique:categories,name,'.($this->categorium->id ?? '').",id",
             'file' => 'image|mimes:jpeg,bmp,jpg,png,gif|max:3072',
             'description' => 'nullable|string'
         ];
@@ -37,7 +37,8 @@ class CategoryFormRequest extends FormRequest
             'file.mimes' => 'Solo se permite subir imagenes con extension jpeg, bmp, png, jpg o gif',
             'file.max' => 'Solo se permite subir imagenes con un peso maximo de 2MB',
             'name.required' => 'La categoria debe tener un nombre',
-            'name.string' => 'El nombre de la categoria debe ser un string'
+            'name.string' => 'El nombre de la categoria debe ser un string',
+            'name.unique' => "Ese nombre ya fue tomado"
         ];
     }
 }

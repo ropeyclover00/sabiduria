@@ -24,4 +24,36 @@ class Tag extends Model
     	$this->attributes['slug'] = Str::slug($value);
     }
 
+    public function getProductsStringAttribute()
+    {
+        $products = "N/A";
+
+        if(count($this->products))
+        {
+            $products = "";
+            foreach ($this->products as $product) 
+                $products .= $product->name . ", ";
+        
+            $products =  substr($products, 0, strlen($products) - 2);    
+        }
+
+        return $products;
+    }
+
+    public function getBlogsStringAttribute()
+    {
+        $blogs = "N/A";
+
+        if(count($this->blogs))
+        {
+            $blogs = "";
+            foreach ($this->blogs as $blog) 
+                $blogs .= $blog->name . ", ";
+        
+            $blogs =  substr($blogs, 0, strlen($blogs) - 2);    
+        }
+
+        return $blogs;
+    }
+
 }
