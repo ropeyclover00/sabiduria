@@ -17,12 +17,13 @@
 
 //Route::get('/', 'CategoryController@index');
 Route::get('/', function(){
-	return view('ecommerce_home');
+	return view('front.static.home');
 });
 
 
 Route::get('/file/{key}', "FileController@getFile");
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/categorias', "CategoryController@listFront")->name('front_categorias');
 
 Route::prefix('admin')->group(function(){
 	Auth::routes();

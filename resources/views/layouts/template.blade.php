@@ -45,6 +45,7 @@
 
 	<!-- Header -->
 	<header class="header-v2">
+		
 		<!-- Header desktop -->
 		<div class="container-menu-desktop trans-03">
 			<div class="wrap-menu-desktop">
@@ -52,7 +53,7 @@
 					
 					<!-- Logo desktop -->		
 					<a href="#" class="logo">
-						<img src="{{asset('images/icons/logo-01.png')}}" alt="IMG-LOGO">
+						<img src="{{asset('images/home/logo.png')}}" alt="IMG-LOGO">
 					</a>
 
 					<!-- Menu desktop -->
@@ -68,28 +69,20 @@
 							</li>
 
 							<li>
-								<a href="{{route('categoria.index')}}">Categorias CRUD</a>
-							</li>
-
-							<!--<li>
-								<a href="product.html">Shop</a>
-							</li>
-
-							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
+								<a href="{{route('front_categorias')}}">Productos</a>
+								
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
-							</li>
-
+								<a href="{{route('front_categorias')}}">Blogs</a>
+							</li>	
 							<li>
-								<a href="about.html">About</a>
-							</li>
-
+								<a href="{{route('front_categorias')}}">Acerca de</a>
+							</li>							
 							<li>
-								<a href="contact.html">Contact</a>
-							</li>-->
+								<a href="{{route('front_categorias')}}">Contactanos</a>
+							</li>	
+							
 						</ul>
 					</div>	
 
@@ -146,7 +139,6 @@
 				</span>
 			</div>
 		</div>
-
 
 		<!-- Menu Mobile -->
 		<div class="menu-mobile">
@@ -422,9 +414,9 @@
 	<footer class="bg3 p-t-75 p-b-32">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<div class="col-sm-6 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Categories
+						Categorias
 					</h4>
 
 					<ul>
@@ -454,65 +446,21 @@
 					</ul>
 				</div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
-						Help
-					</h4>
-
-					<ul>
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Track Order
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Returns 
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shipping
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								FAQs
-							</a>
-						</li>
-					</ul>
-				</div>
-
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				
+				<div class="col-sm-6 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
 						GET IN TOUCH
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+						¿Alguna pregunta? Visitanos en la tienda ubicada en Av. Vallarta #2398 Jardines Vallarta, Guadalajara, Jalisco o llamanos al (+52) 33 2009 9876
 					</p>
 
-					<div class="p-t-27">
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-facebook"></i>
-						</a>
-
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-instagram"></i>
-						</a>
-
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-pinterest-p"></i>
-						</a>
-					</div>
 				</div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
+				<div class="col-sm-6 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Newsletter
+						Boletín
 					</h4>
 
 					<form>
@@ -523,7 +471,7 @@
 
 						<div class="p-t-18">
 							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-								Subscribe
+								Suscribirme
 							</button>
 						</div>
 					</form>
@@ -555,7 +503,7 @@
 
 				<p class="stext-107 cl6 txt-center">
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp; distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Sitio desarrollado por Angel Marin Ramirez Castorena
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
 				</p>
