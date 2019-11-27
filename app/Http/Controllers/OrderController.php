@@ -14,17 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $pedidos = Order::with('user')->paginate(10);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('pedidos.index', compact('pedidos'));
     }
 
     /**
@@ -41,33 +33,22 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Order  $order
+     * @param  \App\Order  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(Order $pedido)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Order $order)
-    {
-        //
+        return view('pedidos.show', compact('pedido'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
+     * @param  \App\Order  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Order $pedido)
     {
         //
     }
@@ -75,11 +56,17 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Order  $order
+     * @param  \App\Order  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Order $pedido)
     {
-        //
+        $id = $pedido->id;
+
+        $pedido->delete();
+
+        $toastr = ['toastr' => 'success', 'msg' => 'Pedido con ID: ' . $id . ' eliminado correctamente'];
+
+        return redirect()->route('pedido.index')->with($toastr);
     }
 }

@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+
+    protected $estados = ['Cancelado', 'Pendiente', 'Pagado', 'Enviado', 'Completado'];
+
     protected $fillable = ['user_id', 'total', 'shipping_cost', 'status', 'street', 'between_streets', 'num_ext', 'num_int', 'neighborhood', 'postal_code', 'state_id', 'city_id'];
 
     public function details()
@@ -28,11 +31,6 @@ class Order extends Model
     	return $this->belongsTo('App\City');
     }
 
-    public function state()
-    {
-    	return $this->belongsTo('App\State');
-    }
-
     public function getStateNameAttribute()
     {
     	return $this->state->name;
@@ -46,5 +44,11 @@ class Order extends Model
     public function getClientNameAttribute()
     {
     	return "{$this->user->name} {$this->user->last_name}";
+    }
+
+    public function getEstadoAttribute()
+    {
+        
+        return $this->estados[$this->status];
     }
 }

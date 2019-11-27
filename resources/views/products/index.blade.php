@@ -5,11 +5,11 @@
 <div class="row w-100">
 	<div class="col-1"></div>
 	<div class="col-10">
-		<h3>Listado de Productos</h3>
+		<h3>Listado de Libros</h3>
 		<hr>
 		<a class="btn btn-success btn-sm" href="{{ route('producto.create') }}">
 			<i class="fa fa-plus"></i>
-			Agregar nuevo producto
+			Agregar nuevo libro
 		</a>
 		<br><br>
 		

@@ -24,6 +24,11 @@ class Product extends Model
     	return $this->belongsToMany('App\Editorial', 'products_has_editorials', 'product_id', 'editorial_id');
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     public function category()
     {
     	return $this->belongsTo('App\Category');

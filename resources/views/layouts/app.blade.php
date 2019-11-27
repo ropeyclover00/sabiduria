@@ -28,7 +28,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route('admin') }}">
                     {{ config('app.name', 'Laravel') }} - Panel Administrativo
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -44,47 +44,55 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        <li>
-                            <a class="btn btn-sucess" href="{{ route('categoria.index') }}">Categorias</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-sucess" href="{{ route('subcategoria.index') }}">Subcategorias</a>
-                        </li>
-                         <li>
-                            <a class="btn btn-sucess" href="{{ route('tag.index') }}">Tags</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-sucess" href="{{ route('editorial.index') }}">Editoriales</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-sucess" href="{{ route('autor.index') }}">Autores</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-sucess" href="{{ route('blog.index') }}">Blogs</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-sucess" href="{{ route('producto.index') }}">Productos</a>
-                        </li>
+                        
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
+                            <!--    <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Regist') }}</a>
+                                </li>-->
                             @endif
                         @else
+                            <li>
+                                <a class="btn btn-sucess" href="{{ route('usuario.index') }}">Usuarios</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-sucess" href="{{ route('pedido.index') }}">Pedidos</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-sucess" href="{{ route('categoria.index') }}">Categorias</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-sucess" href="{{ route('subcategoria.index') }}">Subcategorias</a>
+                            </li>
+                             <li>
+                                <a class="btn btn-sucess" href="{{ route('tag.index') }}">Tags</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-sucess" href="{{ route('editorial.index') }}">Editoriales</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-sucess" href="{{ route('autor.index') }}">Autores</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-sucess" href="{{ route('blog.index') }}">Blogs</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-sucess" href="{{ route('producto.index') }}">Productos</a>
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->full_name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Cerrar Sesión') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

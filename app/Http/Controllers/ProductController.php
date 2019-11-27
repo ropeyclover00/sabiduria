@@ -158,7 +158,6 @@ class ProductController extends Controller
             Files::delete($producto->image->id);
 
         $producto->tags()->detach();
-        $producto->comments()->detach();
         $producto->delete();
 
         $toastr = ['toastr' => 'warning', 'msg' => 'Producto: '.$nombre.' eliminado'];

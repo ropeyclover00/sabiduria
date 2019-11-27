@@ -7,13 +7,14 @@
         <div class="col-md-8">
             <div class="card">
             	<div class="card-header">
-            		Datos del blog 
-            		<a class="float-right" href="{{route('blog.index')}}">Regresar</a> 
+            		Datos del pedido 
+            		<a class="float-right" href="{{route('pedido.index')}}">Regresar</a> 
             	</div>
             	<div class="card-body">
-					
-					<!-- Nav tabs -->
+
+            		<!-- Nav tabs -->
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
+					  
 					  <li class="nav-item">
 					    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
 					    	Información básica
@@ -21,8 +22,9 @@
 					  </li>
 					  
 					  <li class="nav-item">
-					    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Comentarios</a>
+					    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Productos del pedido</a>
 					  </li>
+					  
 					</ul>
 
 					<!-- Tabs panes -->
@@ -35,7 +37,7 @@
 								<b>ID:</b>
 							</div>
 							<div class="col-9">
-								{{$blog->id}}
+								{{$pedido->id}}
 							</div>
 						</div>
 
@@ -44,113 +46,125 @@
 								<b>Estatus:</b>
 							</div>
 							<div class="col-9">
-								{{$blog->estatus}}
+								{{$pedido->estado}}
 							</div>
 						</div>
 
 						<div class="row w-100 mt-4">
 							<div class="col-3" style="text-align: right;">
-								<b>Nombre:</b>
+								<b>Cliente:</b>
 							</div>
 							<div class="col-9">
-								{{$blog->name}}
+								{{$pedido->client_name}}
 							</div>
 						</div>
 		
 						<div class="row w-100 mt-4">
 							<div class="col-3" style="text-align: right;">
-								<b>Slug:</b>
+								<b>Subtotal:</b>
 							</div>
 							<div class="col-9">
-								{{ $blog->slug }}
+								${{ number_format($pedido->subtotal, 2, '.', ',') }} MXN
 							</div>
 						</div>
 
 						<div class="row w-100 mt-4">
 							<div class="col-3" style="text-align: right;">
-								<b>Autor:</b>
+								<b>Costo de envío:</b>
 							</div>
 							<div class="col-9">
-								{{ $blog->author_name }}
+								{{number_format($pedido->shipping_cost, 2, '.', ',')}}
 							</div>
 						</div>
 
 						<div class="row w-100 mt-4">
 							<div class="col-3" style="text-align: right;">
-								<b>Categoria:</b>
+								<b>Total:</b>
 							</div>
 							<div class="col-9">
-								{{$blog->category_name}}
+								${{ number_format($pedido->total, 2, '.', ',') }} MXN
 							</div>
 						</div>
-
-						
-						<div class="row w-100 mt-4">
-							<div class="col-3" style="text-align: right;">
-								<b>Subcategoria:</b>
-							</div>
-							<div class="col-9">
-								{{$blog->subcategory_name}}
-							</div>
-						</div>
-
-						<div class="row w-100 mt-4">
-							<div class="col-2" style="text-align: right;">
-								<b>Contenido:</b>
-							</div>
-							<div class="row w-100" style="margin-left: 15px;">
-								<div class="col-12 " style="border: solid thin; padding: 10px; ">
-									{!! $blog->content !!}
-								</div>	
-							</div>						
-						</div>
-						
-						<div class="row w-100 mt-4">
-							<div class="col-3" style="text-align: right;">
-								<b>Tags:</b>
-							</div>
-							<div class="col-9">
-								{{$blog->tags_string}}
-							</div>
-						</div>
-
-						<h4 class="mt-4">Documentos cargados</h4>
-	    				<div class="row w-100">
-	    					@if(!count($blog->documents))
-								<p>No hay documentos.</p>
-	    					@endif
-	    					@foreach($blog->documents as $doc)
-								<div class="col-4">
-									<a href="{!! $doc['url'] !!}"><i class="fa fa-file"></i>{!! $doc['name'] !!}</a>
-								</div>
-	    					@endforeach
-	    				</div>
 
 						<div class="row w-100 mt-4">
 							<div class="col-3" style="text-align: right;">
-								<b>Imagen:</b>
+								<b>Calle:</b>
 							</div>
 							<div class="col-9">
-								@if($blog->img_url)
-									<img src="{{ $blog->img_url }}" alt="" width="50%">
-								@else
-									N/A
-								@endif
+								{{ $pedido->street ?? 'N/A' }}
 							</div>
 						</div>
+
+						<div class="row w-100 mt-4">
+							<div class="col-3" style="text-align: right;">
+								<b>Número exterior:</b>
+							</div>
+							<div class="col-9">
+								{{ $pedido->num_ext ?? 'N/A' }}
+							</div>
+						</div>
+
+						<div class="row w-100 mt-4">
+							<div class="col-3" style="text-align: right;">
+								<b>Número interior:</b>
+							</div>
+							<div class="col-9">
+								{{ $pedido->num_int ?? 'N/A' }}
+							</div>
+						</div>
+
+						<div class="row w-100 mt-4">
+							<div class="col-3" style="text-align: right;">
+								<b>Entre calles:</b>
+							</div>
+							<div class="col-9">
+								{{ $pedido->between_streets ?? 'N/A' }}
+							</div>
+						</div>						
+
+						<div class="row w-100 mt-4">
+							<div class="col-3" style="text-align: right;">
+								<b>Colonia:</b>
+							</div>
+							<div class="col-9">
+								{{ $pedido->neighborhood ?? 'N/A' }}
+							</div>
+						</div>						
+
+						<div class="row w-100 mt-4">
+							<div class="col-3" style="text-align: right;">
+								<b>Código Postal:</b>
+							</div>
+							<div class="col-9">
+								{{ $pedido->postal_code ?? 'N/A' }}
+							</div>
+						</div>	
+
+						<div class="row w-100 mt-4">
+							<div class="col-3" style="text-align: right;">
+								<b>Ciudad:</b>
+							</div>
+							<div class="col-9">
+								{{ $pedido->city_name ?? 'N/A' }}
+							</div>
+						</div>	
+
+						<div class="row w-100 mt-4">
+							<div class="col-3" style="text-align: right;">
+								<b>Estado:</b>
+							</div>
+							<div class="col-9">
+								{{ $pedido->state_name ?? 'N/A' }}
+							</div>
+						</div>						
 											
 						<div class="row mt-4">
-							<div class="offset-4 col-2">
-								<a href="{{route('blog.edit', $blog->id)}}" class="btn btn-sm btn-info">
-									Editar
-								</a>
-								
-							</div>
+						
 							
 							<div class="col-2">
 								<form 	method="POST" 
 								onsubmit="return confirmacion()" 
-								action="{{ route('blog.destroy', $blog->id) }}">
+								action="{{ route('pedido.destroy', $pedido->id) }}">
 								
 									@method("DELETE")
 									@csrf
@@ -161,8 +175,9 @@
 						</div>
 					</div>
 
-					<div class="tab-pane fade mt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-						@if(count($blog->comments))
+
+	    			<div class="tab-pane fade mt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+						@if(count($pedido->details))
 							<table class="table table-striped table-bordered table-hover">
 								<thead>
 									<tr>
@@ -174,16 +189,16 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($blog->comments as $comment)
+									@foreach($pedido->details as $detail)
 										<tr>
-											<th>{{$comment->user_name}}</th>
-											<th>{{$comment->score}} estrellas</th>
-											<th>{{$comment->content}}</th>
-											<th>{{ $comment->created_at->format('d-m-Y') }}</th>
+											<th>{{$detail->user_name}}</th>
+											<th>{{$detail->score}} estrellas</th>
+											<th>{{$detail->content}}</th>
+											<th>{{ $detail->created_at->format('d-m-Y') }}</th>
 											<th>
 												<form 	method="POST" 
 												onsubmit="return confirmacion_comentario()" 
-												action="{{ route('comentario.destroy', $comment->id) }}">
+												action="{{ route('comentario.destroy', $detail->id) }}">
 												
 													@method("DELETE")
 													@csrf
@@ -195,11 +210,9 @@
 								</tbody>
 							</table>
 						@else
-						<h4>No hay comentarios</h4>
+						<h4>No hay datos</h4>
 						@endif
 	    			</div>
-					
-
 					
 				</div>
 				</div>
@@ -214,13 +227,10 @@
 <script>
 	function confirmacion()
 	{
-		return confirm('¿Desea eliminar este blog?');
+		return confirm('¿Desea eliminar este pedido?');
 	}
 
-	function confirmacion_comentario()
-	{
-		return confirm('¿Desea eliminar este comentario?');	
-	}
+	
 
 </script>
 @endsection

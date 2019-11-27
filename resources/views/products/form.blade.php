@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <div class="card">
             	<div class="card-header">
-            		Formulario de productos
+            		Formulario de libros
 					<a class="float-right" href="{{route('producto.index')}}">Regresar</a> 
             	</div>
             	<div class="card-body">
@@ -320,7 +320,6 @@
 @section('script')
 <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('vendor/select2/select2.min.js')}}"></script>
-<script src="{{ asset('vendor/dropzone/min/dropzone.min.js')}}"></script>
 <script type="text/javascript">
 	
 	var categorias = @json($categories);
