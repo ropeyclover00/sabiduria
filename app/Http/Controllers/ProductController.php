@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\{Product, Category, Subcategory, Tag, Country, Author, Editorial};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductFormRequest;
 use Files;
+
 
 class ProductController extends Controller
 {
@@ -162,5 +164,31 @@ class ProductController extends Controller
 
         $toastr = ['toastr' => 'warning', 'msg' => 'Producto: '.$nombre.' eliminado'];
         return redirect()->route('producto.index')->with($toastr);
+    }
+
+    public function listFront($category_id = null, $subcategory_id = null)
+    {
+        $products = Product::all();
+        return view('front.products.listado', compact('products'));
+    }
+
+    public function showFront(Product $producto)
+    {
+        return view('front.products.detalle', compact('producto'));
+    }
+
+    public function addComment(Request $request, Product $producto)
+    {
+    
+        $user_id = Auth::user()->id;
+
+        $producto->comments()
+                 ->create(['content' => $request->content, 
+                           'score' => $request->score, 
+                           'user_id' => $user_id]);
+
+        $toastr = ['toastr' => 'success', 'msg' => 'Comentario agregado correctamente'];
+
+        return redirect()->back()->with($toastr);
     }
 }

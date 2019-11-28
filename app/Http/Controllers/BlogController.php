@@ -158,4 +158,10 @@ class BlogController extends Controller
         $toastr = ['toastr' => 'success', 'msg' => 'Archivo eliminado con éxito!!'];
         return redirect()->back()->with($toastr);
     }
+
+    public function listFront($category_id = null, $subcategory_id = null)
+    {
+        return view('front.blogs.listado');
+    }
+
 }

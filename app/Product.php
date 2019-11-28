@@ -171,4 +171,9 @@ class Product extends Model
         return $url;
     }
 
+    public function getPriceFormatAttribute()
+    {
+        return number_format((float) $this->price, 2, '.',',');
+    }
+
 }

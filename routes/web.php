@@ -1,37 +1,31 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-
-//Route::get('/', 'CategoryController@index');
-Route::get('/', function(){
-	return view('front.static.home');
-});
-
-
+//Globales
 Route::get('/file/{key}', "FileController@getFile");
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/categorias', "CategoryController@listFront")->name('front_categorias');
-
-Route::prefix('admin')->group(function(){
-	Auth::routes();
-});
-
+Auth::routes(['verify' => true]);
 Route::resource('comentario', "CommentController")->except(['edit', 'update', 'create', 'index']);;
 Route::resource('pedido', "OrderController")->except(['edit', 'create']);
 
+//Estaticas
+Route::get('/', "HomeController@index")->name('home');
+Route::get('/home', "HomeController@index")->name('home');
+Route::get('/contacto', "HomeController@contacto")->name('contacto');
+Route::get('/nosotros', "HomeController@nosotros")->name('nosotros');
+Route::get('/carrito', "HomeController@carrito")->name('carrito');
+
+//Productos
+Route::get('/productos/{category_id?}/{subcategory_id?}', "ProductController@listFront")->name('productos');
+Route::get('/producto-detalle/{producto}', "ProductController@showFront")->name('producto-detalle');
+Route::post('/producto-comentario/{producto}', "ProductController@addComment")->middleware(['verified', 'auth'])->name('producto-comentario');
+
+//Blogs
+Route::get('/blogs/{category_id?}/{subcategory_id?}', "BlogController@listFront")->name('blogs');
+Route::get('/blog-detalle/{blog}', "BlogController@show")->name('blog-detalle');
+
+//Cliente
+Route::get('/cuenta', "HomeController@cuenta")->middleware(['verified', 'auth'])->name('cuenta');
+Route::get('/pedidos', "HomeController@pedidos")->middleware(['verified', 'auth'])->name('pedidos');
+
+//Panel Administrativo
 Route::prefix('admin')->middleware(['auth', 'role'])->group(function(){
 
 	Route::get('/', function(){

@@ -38,7 +38,10 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/util.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/main.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/login/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/login/main.css')}}">
 	<!--===============================================================================================-->
+	<link href="{{ asset('vendor/toastr/toastr.min.css') }}" rel="stylesheet">
 
 </head>
 <body class="animsition">
@@ -52,7 +55,7 @@
 				<nav class="limiter-menu-desktop p-l-45">
 					
 					<!-- Logo desktop -->		
-					<a href="#" class="logo">
+					<a class="logo">
 						<img src="{{asset('images/home/logo.png')}}" alt="IMG-LOGO">
 					</a>
 
@@ -60,32 +63,32 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li class="active-menu">
-								<a href="/">Home</a>
-								<!--<ul class="sub-menu">
-									<li><a href="index.html">Homepage 1</a></li>
-									<li><a href="home-02.html">Homepage 2</a></li>
-									<li><a href="home-03.html">Homepage 3</a></li>
-								</ul>-->
+								<a href="{{route('home')}}">Home</a>
 							</li>
 
 							<li>
-								<a href="{{route('front_categorias')}}">Productos</a>
+								<a href="{{route('productos')}}">Productos</a>
 								
 							</li>
 
 							<li>
-								<a href="{{route('front_categorias')}}">Blogs</a>
+								<a href="{{route('blogs')}}">Blogs</a>
 							</li>	
 							<li>
-								<a href="{{route('front_categorias')}}">Acerca de</a>
+								<a href="{{route('nosotros')}}">Nosotros</a>
 							</li>							
 							<li>
-								<a href="{{route('front_categorias')}}">Contactanos</a>
+								<a href="{{route('contacto')}}">Contáctanos</a>
 							</li>	
 							
 						</ul>
 					</div>	
 
+					@if(Auth::user())
+					<div style="margin-left: 140px;">
+						<b>Usuario:</b> {{ Auth::user()->full_name }}
+					</div>
+					@endif
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m h-full">
 						<div class="flex-c-m h-full p-r-24">
@@ -110,73 +113,6 @@
 			</div>	
 		</div>
 
-		<!-- Header Mobile -->
-		<div class="wrap-header-mobile">
-			<!-- Logo moblie -->		
-			<div class="logo-mobile">
-				<a href="index.html"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
-			</div>
-
-			<!-- Icon header -->
-			<div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
-				<div class="flex-c-m h-full p-r-10">
-					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
-						<i class="zmdi zmdi-search"></i>
-					</div>
-				</div>
-
-				<div class="flex-c-m h-full p-lr-10 bor5">
-					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
-						<i class="zmdi zmdi-shopping-cart"></i>
-					</div>
-				</div>
-			</div>
-
-			<!-- Button show menu -->
-			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-				<span class="hamburger-box">
-					<span class="hamburger-inner"></span>
-				</span>
-			</div>
-		</div>
-
-		<!-- Menu Mobile -->
-		<div class="menu-mobile">
-			<ul class="main-menu-m">
-				<li>
-					<a href="index.html">Home</a>
-					<ul class="sub-menu-m">
-						<li><a href="index.html">Homepage 1</a></li>
-						<li><a href="home-02.html">Homepage 2</a></li>
-						<li><a href="home-03.html">Homepage 3</a></li>
-					</ul>
-					<span class="arrow-main-menu-m">
-						<i class="fa fa-angle-right" aria-hidden="true"></i>
-					</span>
-				</li>
-
-				<li>
-					<a href="product.html">Shop</a>
-				</li>
-
-				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
-				</li>
-
-				<li>
-					<a href="blog.html">Blog</a>
-				</li>
-
-				<li>
-					<a href="about.html">About</a>
-				</li>
-
-				<li>
-					<a href="contact.html">Contact</a>
-				</li>
-			</ul>
-		</div>
-
 		<!-- Modal Search -->
 		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
 			<div class="container-search-header">
@@ -188,7 +124,7 @@
 					<button class="flex-c-m trans-04">
 						<i class="zmdi zmdi-search"></i>
 					</button>
-					<input class="plh3" type="text" name="search" placeholder="Search...">
+					<input class="plh3" type="text" name="search" placeholder="Busqueda...">
 				</form>
 			</div>
 		</div>
@@ -208,111 +144,65 @@
 			<div class="sidebar-content flex-w w-full p-lr-65 js-pscroll">
 				<ul class="sidebar-link w-full">
 					<li class="p-b-13">
-						<a href="index.html" class="stext-102 cl2 hov-cl1 trans-04">
+						<a href="{{route('home')}}" class="stext-102 cl2 hov-cl1 trans-04">
 							Home
 						</a>
 					</li>
+					
+					<li class="p-b-13">
+						@guest
+						<a href="{{ route('login') }}" class="stext-102 cl2 hov-cl1 trans-04">
+							Iniciar Sesión
+						</a>
+						@else
+						<a class="stext-102 cl2 hov-cl1 trans-04" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            {{ __('Cerrar Sesión') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+						@endguest
+					</li>
 
 					<li class="p-b-13">
-						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-							My Wishlist
+						@guest
+						<a href="{{ route('register') }}" class="stext-102 cl2 hov-cl1 trans-04">
+							Registrarse
+						</a>
+						@else
+						<a href="{{ route('cuenta') }}" class="stext-102 cl2 hov-cl1 trans-04">
+							Mi cuenta
+						</a>
+						@endguest
+
+					</li>
+
+					<li class="p-b-13">
+						<a href="{{ route('carrito') }}" class="stext-102 cl2 hov-cl1 trans-04">
+							Mi Carrito
 						</a>
 					</li>
 
 					<li class="p-b-13">
-						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-							My Account
+						<a href="{{ route('contacto') }}" class="stext-102 cl2 hov-cl1 trans-04">
+							Contáctanos
 						</a>
 					</li>
-
-					<li class="p-b-13">
-						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-							Track Oder
-						</a>
-					</li>
-
-					<li class="p-b-13">
-						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-							Refunds
-						</a>
-					</li>
-
-					<li class="p-b-13">
-						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-							Help & FAQs
-						</a>
-					</li>
+					
 				</ul>
-
-				<div class="sidebar-gallery w-full p-tb-30">
-					<span class="mtext-101 cl5">
-						@ CozaStore
-					</span>
-
-					<div class="flex-w flex-sb p-t-36 gallery-lb">
-						<!-- item gallery sidebar -->
-						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="images/gallery-01.jpg" data-lightbox="gallery" 
-							style="background-image: url('images/gallery-01.jpg');"></a>
-						</div>
-
-						<!-- item gallery sidebar -->
-						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="images/gallery-02.jpg" data-lightbox="gallery" 
-							style="background-image: url('images/gallery-02.jpg');"></a>
-						</div>
-
-						<!-- item gallery sidebar -->
-						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="images/gallery-03.jpg" data-lightbox="gallery" 
-							style="background-image: url('images/gallery-03.jpg');"></a>
-						</div>
-
-						<!-- item gallery sidebar -->
-						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="images/gallery-04.jpg" data-lightbox="gallery" 
-							style="background-image: url('images/gallery-04.jpg');"></a>
-						</div>
-
-						<!-- item gallery sidebar -->
-						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="images/gallery-05.jpg" data-lightbox="gallery" 
-							style="background-image: url('images/gallery-05.jpg');"></a>
-						</div>
-
-						<!-- item gallery sidebar -->
-						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="images/gallery-06.jpg" data-lightbox="gallery" 
-							style="background-image: url('images/gallery-06.jpg');"></a>
-						</div>
-
-						<!-- item gallery sidebar -->
-						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="images/gallery-07.jpg" data-lightbox="gallery" 
-							style="background-image: url('images/gallery-07.jpg');"></a>
-						</div>
-
-						<!-- item gallery sidebar -->
-						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="images/gallery-08.jpg" data-lightbox="gallery" 
-							style="background-image: url('images/gallery-08.jpg');"></a>
-						</div>
-
-						<!-- item gallery sidebar -->
-						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="images/gallery-09.jpg" data-lightbox="gallery" 
-							style="background-image: url('images/gallery-09.jpg');"></a>
-						</div>
-					</div>
-				</div>
 
 				<div class="sidebar-gallery w-full">
 					<span class="mtext-101 cl5">
-						About Us
+						Acerca de Nosotros
 					</span>
 
 					<p class="stext-108 cl6 p-t-27">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur maximus vulputate hendrerit. Praesent faucibus erat vitae rutrum gravida. Vestibulum tempus mi enim, in molestie sem fermentum quis. 
+						Sabiduria es una empresa mexicana que nace en el año de 2019. Se dedica a la distribución y comercialización de libros de texto, revistas, material didactico.
+
+						Cuenta con su matriz en la ciudad de Guadalajara, Jalisco.
 					</p>
 				</div>
 			</div>
@@ -327,7 +217,7 @@
 		<div class="header-cart flex-col-l p-l-65 p-r-25">
 			<div class="header-cart-title flex-w flex-sb-m p-b-8">
 				<span class="mtext-103 cl2">
-					Your Cart
+					Tu Carrito
 				</span>
 
 				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
@@ -392,13 +282,11 @@
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							View Cart
+						<a href="{{route('carrito')}}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+							Ir al carrito
 						</a>
 
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							Check Out
-						</a>
+						
 					</div>
 				</div>
 			</div>
@@ -413,72 +301,8 @@
 	<!-- Footer -->
 	<footer class="bg3 p-t-75 p-b-32">
 		<div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-lg-4 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
-						Categorias
-					</h4>
-
-					<ul>
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Women
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Men
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shoes
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Watches
-							</a>
-						</li>
-					</ul>
-				</div>
-
-				
-				<div class="col-sm-6 col-lg-4 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
-						GET IN TOUCH
-					</h4>
-
-					<p class="stext-107 cl7 size-201">
-						¿Alguna pregunta? Visitanos en la tienda ubicada en Av. Vallarta #2398 Jardines Vallarta, Guadalajara, Jalisco o llamanos al (+52) 33 2009 9876
-					</p>
-
-				</div>
-
-				<div class="col-sm-6 col-lg-4 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">
-						Boletín
-					</h4>
-
-					<form>
-						<div class="wrap-input1 w-full p-b-4">
-							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
-							<div class="focus-input1 trans-04"></div>
-						</div>
-
-						<div class="p-t-18">
-							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-								Suscribirme
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-
-			<div class="p-t-40">
+			
+			<div class="">
 				<div class="flex-c-m flex-w p-b-18">
 					<a href="#" class="m-all-1">
 						<img src="{{asset('images/icons/icon-pay-01.png')}}" alt="ICON-PAY">
@@ -518,6 +342,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!--===============================================================================================-->
 	<script src="{{asset('vendor/bootstrap/js/popper.js')}}"></script>
 	<script src="{{asset('vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+
+	
+
 <!--===============================================================================================-->
 	<script src="{{asset('vendor/select2/select2.min.js')}}"></script>
 	<script>
@@ -611,6 +438,37 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	</script>
 <!--===============================================================================================-->
 	<script src="{{asset('js/main.js')}}"></script>
+	<script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
+	<!-- SCRIPT PARA LAS NOTIFICACIONES BONIS uwu -->
+    <script>
+       $(function(){
+       	@if(Session::has('toastr') && Session::has('msg'))
+
+            var type = "{{ Session::get('toastr') }}";
+            var msg =  "{{ Session::get('msg') }}";
+
+            console.log(type)
+            console.log(msg)
+
+            switch(type)
+            {
+                case 'success':
+                    toastr.success(msg);
+                    break;
+                case 'warning':
+                    toastr.warning(msg);
+                    break;
+                case 'info':
+                    toastr.info(msg);
+                    break;
+                case 'error':
+                    toastr.error(msg);
+                    break;
+            }
+
+       @endif
+       })       
+    </script>
 
 </body>
 </html>
