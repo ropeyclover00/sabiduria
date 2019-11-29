@@ -116,7 +116,7 @@
 				<div class="col-sm-6 col-md-4 p-b-40">
 					<div class="blog-item">
 						<div class="hov-img0">
-							<a href="blog-detail.html">
+							<a href="{{route('blog-detalle', $blog->id)}}">
 								<img src="{{$blog->img_url}}" alt="IMG-BLOG" style="height: 400px;">
 							</a>
 						</div>
@@ -145,7 +145,7 @@
 							</div>
 
 							<h4 class="p-b-12">
-								<a href="blog-detail.html" class="mtext-101 cl2 hov-cl1 trans-04">
+								<a href="{{route('blog-detalle', $blog->id)}}" class="mtext-101 cl2 hov-cl1 trans-04">
 									{{$blog->name}}
 								</a>
 							</h4>
