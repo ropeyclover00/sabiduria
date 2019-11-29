@@ -92,6 +92,11 @@ class UserController extends Controller
      */
     public function update(UserFormRequest $request, User $usuario)
     {
+        if(empty($request->password))
+        {
+            unset($request['password']);
+        }
+
         $usuario->fill($request->all());
         if(!empty($request->password))
             $usuario->password = Hash::make($request->password);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\{Blog, Category, Subcategory, Tag, User};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BlogFormRequest;
 use App\Http\Requests\DocumentFormRequest;
 use Files;
@@ -161,7 +162,31 @@ class BlogController extends Controller
 
     public function listFront($category_id = null, $subcategory_id = null)
     {
-        return view('front.blogs.listado');
+        $blogs = Blog::with(['author', 'tags', 'comments', 'files'])->get();
+        $categories = Category::select('id', 'name')->get();
+        $tags = Tag::select('id', 'name')->get();
+
+        return view('front.blogs.listado', compact('blogs', 'tags', 'categories'));
+    }
+
+    public function showFront(Blog $blog)
+    {
+        return view('front.blogs.detalle', compact('blog'));
+    }
+
+    public function addComment(Request $request, Blog $blog)
+    {
+    
+        $user_id = Auth::user()->id;
+
+        $blog->comments()
+                 ->create(['content' => $request->content, 
+                           'score' => $request->score, 
+                           'user_id' => $user_id]);
+
+        $toastr = ['toastr' => 'success', 'msg' => 'Comentario agregado correctamente'];
+
+        return redirect()->back()->with($toastr);
     }
 
 }

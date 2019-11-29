@@ -10,7 +10,10 @@ Route::get('/', "HomeController@index")->name('home');
 Route::get('/home', "HomeController@index")->name('home');
 Route::get('/contacto', "HomeController@contacto")->name('contacto');
 Route::get('/nosotros', "HomeController@nosotros")->name('nosotros');
-Route::get('/carrito', "HomeController@carrito")->name('carrito');
+
+//Carrito
+Route::get('/carrito', "CartController@index")->name('carrito')->middleware(['verified', 'auth']);
+Route::post('/carrito/{product_id}', "CartController@store")->name('carrito2')->middleware(['verified', 'auth']);
 
 //Productos
 Route::get('/productos/{category_id?}/{subcategory_id?}', "ProductController@listFront")->name('productos');
@@ -19,7 +22,8 @@ Route::post('/producto-comentario/{producto}', "ProductController@addComment")->
 
 //Blogs
 Route::get('/blogs/{category_id?}/{subcategory_id?}', "BlogController@listFront")->name('blogs');
-Route::get('/blog-detalle/{blog}', "BlogController@show")->name('blog-detalle');
+Route::get('/blog-detalle/{blog}', "BlogController@showFront")->name('blog-detalle');
+Route::post('/blog-comentario/{blog}', "BlogController@addComment")->middleware(['verified', 'auth'])->name('blog-comentario');
 
 //Cliente
 Route::get('/cuenta', "HomeController@cuenta")->middleware(['verified', 'auth'])->name('cuenta');
