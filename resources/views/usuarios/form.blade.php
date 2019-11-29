@@ -19,11 +19,7 @@
 				    	Información básica
 				    </a>
 				  </li>
-				  @if(!empty($usuario))
-				  <li class="nav-item">
-				    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Archivos</a>
-				  </li>
-				  @endif
+				  
 				</ul>
 				
 				<!-- Tabs panes -->
@@ -307,9 +303,7 @@
 						@endif
 					</div>
 
-	    			<div class="tab-pane fade mt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 	    			
-	    			</div>
         		
             	</div>
             </div>

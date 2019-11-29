@@ -176,4 +176,10 @@ class Product extends Model
         return number_format((float) $this->price, 2, '.',',');
     }
 
+
+    public function details()
+    {
+        return $this->hasMany('App\OrderDetail');
+    }
+
 }

@@ -185,6 +185,15 @@
 					</li>
 
 					<li class="p-b-13">
+						@if(Auth::user())
+						<a href="{{ route('pedidos') }}" class="stext-102 cl2 hov-cl1 trans-04">
+							Mis Pedidos
+						</a>
+						@endif
+
+					</li>
+
+					<li class="p-b-13">
 						<a href="{{ route('contacto') }}" class="stext-102 cl2 hov-cl1 trans-04">
 							Contáctanos
 						</a>

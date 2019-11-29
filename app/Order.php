@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; //add this line
 
 class Order extends Model
 {
+    use SoftDeletes; //add this line
 
     protected $estados = ['Cancelado', 'Pendiente', 'Pagado', 'Enviado', 'Completado'];
 

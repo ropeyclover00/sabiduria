@@ -10,6 +10,17 @@
             		Datos del pedido 
             		<a class="float-right" href="{{route('pedido.index')}}">Regresar</a> 
             	</div>
+
+				@if ($errors->any())
+				<div class="alert alert-danger">
+				    <ul>
+				        @foreach ($errors->all() as $error)
+				            <li>{{ $error }}</li>
+				        @endforeach
+				    </ul>
+				</div>
+				@endif
+
             	<div class="card-body">
 
             		<!-- Nav tabs -->
@@ -46,7 +57,24 @@
 								<b>Estatus:</b>
 							</div>
 							<div class="col-9">
-								{{$pedido->estado}}
+								<form action="{{ route('pedido.update', $pedido->id) }}" method="POST">
+									<input type="hidden" name="_method" value="PATCH">
+									@csrf
+									<select name="status" id="status">
+										<option>Seleccione una opción</option>
+										@foreach($estados as $key => $estado)
+										<option value="{{$key}}"
+											@if($pedido->status == $key)
+												selected
+											@endif
+										>
+											{{$estado}}
+										</option>
+										@endforeach
+									</select>
+									<input type="submit" class="btn btn-sm btn-success" value="Aceptar">
+								</form>
+								
 							</div>
 						</div>
 
@@ -181,30 +209,28 @@
 							<table class="table table-striped table-bordered table-hover">
 								<thead>
 									<tr>
-										<th>Usuario</th>
-										<th>Puntuación</th>
-										<th>Comentario</th>
-										<th>Fecha de publicación</th>
-										<th>Acción</th>
+										<th></th>
+										<th>Producto</th>
+										<th>Cantidad</th>
+										<th>Precio</th>
+										<th>Total</th>
 									</tr>
 								</thead>
 								<tbody>
 									@foreach($pedido->details as $detail)
 										<tr>
-											<th>{{$detail->user_name}}</th>
-											<th>{{$detail->score}} estrellas</th>
-											<th>{{$detail->content}}</th>
-											<th>{{ $detail->created_at->format('d-m-Y') }}</th>
-											<th>
-												<form 	method="POST" 
-												onsubmit="return confirmacion_comentario()" 
-												action="{{ route('comentario.destroy', $detail->id) }}">
-												
-													@method("DELETE")
-													@csrf
-													<button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-												</form>	
-											</th>
+											<td>
+												@if($detail->product->img_url)
+													<img src="{{ $detail->product->img_url }}" alt="" width="70px">
+												@else
+												-
+												@endif
+											</td>
+											<td>{{ $detail->product->name }}</td>
+											<td>{{ $detail->quantity }}</td>
+											<td>{{ $detail->price_format }}</td>
+											<td>{{ $detail->total_format }}</td>
+
 										</tr>
 									@endforeach
 								</tbody>

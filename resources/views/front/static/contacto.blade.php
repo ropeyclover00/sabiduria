@@ -10,21 +10,32 @@
 		<div class="container">
 			<div class="flex-w flex-tr">
 				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-					<form>
+					<form action="{{ route('contacto_email') }}" method="POST">
 						<h4 class="mtext-105 cl2 txt-center p-b-30">
 							Envíanos un mensaje
 						</h4>
 
+						@if ($errors->any())
+							<div class="alert alert-danger mt-5 mb-5">
+							    <ul>
+							        @foreach ($errors->all() as $error)
+							            <li>{{ $error }}</li>
+							        @endforeach
+							    </ul>
+							</div>
+							@endif
+
+						@csrf
 						<div class="bor8 m-b-20 how-pos4-parent">
 							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Email">
 							<img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON">
 						</div>
 
 						<div class="bor8 m-b-30">
-							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="¿En que podemos ayudarte?"></textarea>
+							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="content" placeholder="¿En que podemos ayudarte?"></textarea>
 						</div>
 
-						<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+						<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" type="submit">
 							Enviar
 						</button>
 					</form>

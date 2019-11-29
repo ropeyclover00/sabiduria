@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->float("total");
-            $table->float("shipping_cost");
+            $table->float("shipping_cost")->default(0);
             $table->boolean("status")->default(1); //0->Cancelado, 1->Procesado, 2->Pagado, 3->enviado, 4->Procesado
             $table->string('street')->nullable();
             $table->string('between_streets')->nullable();
@@ -52,6 +52,8 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropSoftDeletes(); //add this line
+        });
     }
 }

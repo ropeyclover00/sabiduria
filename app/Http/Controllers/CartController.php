@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Cart;
+use App\{Cart, State};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,9 +16,18 @@ class CartController extends Controller
     public function index()
     {
         $id = Auth::user()->id;
-        $carts = Cart::where('user_id', $id)->with(['product'])->first();
+        $carts = Cart::where('user_id', $id)->with(['product'])->get();
+        $estados = State::with(['cities'])->orderBy('name', 'asc')->get();
 
-        return view('front.cart.index', compact('carts'));
+        
+
+        $total = 0;
+        foreach ($carts as $key => $cart)
+            $total += $cart->product->price * $cart->quantity;
+        
+        $total = '$' . number_format((float) $total, 2, '.',',') . " MXN";
+
+        return view('front.cart.index', compact('carts', 'estados', 'total'));
     }
 
     /**
@@ -39,6 +48,10 @@ class CartController extends Controller
      */
     public function store(Request $request, $product_id)
     {
+        $request->validate([
+            'quantity' => 'required|integer',
+        ]);
+
         $user_id = Auth::user()->id;
 
         Cart::create([

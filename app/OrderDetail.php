@@ -17,4 +17,14 @@ class OrderDetail extends Model
     {
     	return $this->belongsTo(Product::class);
     }
+
+    public function getPriceFormatAttribute()
+    {
+        return "$" . number_format((float) $this->price, 2, '.',',') . " MXN";
+    }
+
+    public function getTotalFormatAttribute()
+    {
+    	return "$" . number_format((float) ($this->price * $this->quantity), 2, '.',',') . " MXN";	
+    }
 }

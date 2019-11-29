@@ -83,6 +83,39 @@ class UserController extends Controller
         return view('usuarios.form', compact('estados', 'usuario', 'roles'));
     }
 
+    public function cuenta()
+    {
+        $estados = State::with(['cities'])->orderBy('name', 'asc')->get();
+        $roles = [['id' => 1, 'name' => 'Cliente',], ['id' => 2, 'name' => 'Administrador',]];
+
+        return view('front.usuario.cuenta', compact('estados'));
+    }
+
+    public function updateCuenta(UserFormRequest $request, User $usuario)
+    {
+        if(empty($request->password))
+        {
+            unset($request['password']);
+        }
+
+        $usuario->fill($request->all());
+        if(!empty($request->password))
+            $usuario->password = Hash::make($request->password);
+        $usuario->save();
+
+        if($request->has('file'))
+        {
+            if($usuario->image)
+                Files::delete($usuario->image->id);
+
+            $file = Files::save($request->file, $usuario, 'images/usuarios');
+        }
+        
+        $toastr = ['toastr' => 'success', 'msg' => 'Información actualizada con éxito!'];
+
+        return redirect()->back()->with($toastr);
+    }
+
     /**
      * Update the specified resource in storage.
      *

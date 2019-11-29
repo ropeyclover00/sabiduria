@@ -154,6 +154,13 @@ class ProductController extends Controller
      */
     public function destroy(Product $producto)
     {
+        
+        if(count($producto->details))
+        {
+           $toastr = ['toastr' => 'error', 'msg' => 'Por integridad en la base de datos, no puede eliminar un producto que forma parte de un pedido.'];
+            return redirect()->back()->with($toastr);
+        }
+
         $nombre = $producto->name;
 
         if($producto->image)

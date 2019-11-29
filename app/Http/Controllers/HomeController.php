@@ -51,4 +51,17 @@ class HomeController extends Controller
         return view('front.cart.index');
     }
     
+    public function sendContacto(Request $request)
+    {
+        $request->validate([
+            'email' => "required|email",
+            'content' => "required|string"
+        ]);
+
+        \Mail::to('ramirezcastorena_b@outlook.com')->send(new \App\Mail\Contacto($request->all()));
+
+        $toastr = ['toastr' => 'success', 'msg' => 'Se ha enviado su correo!!'];
+
+        return redirect()->back()->with($toastr);
+    }
 }

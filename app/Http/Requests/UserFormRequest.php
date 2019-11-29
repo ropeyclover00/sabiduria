@@ -28,7 +28,7 @@ class UserFormRequest extends FormRequest
             'email' => 'required|email|unique:users,email,' . ($this->usuario->id ?? '') . ',id',
             'password' => 'required_without:id',
             'file' => 'image|mimes:jpeg,bmp,jpg,png,gif|max:3072',
-            'rol' => 'required|integer',
+            'rol' => 'integer',
             'last_name' => 'string|max:191',
             'address' => 'nullable|string|max:191',
             'interior_number' => 'nullable|string|max:191',
